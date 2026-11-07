@@ -1,0 +1,11 @@
+# Personal integrations
+
+Extend the existing single-page workspace with Today: Gmail and Google Calendar summaries through the user's native Codex MCP connection, plus Pixelpop task and nutrition management. The user selected viewing and managing Pixelpop data in Mari. Keep the existing avatar, palette, project controls, and target-site approval workflow.
+
+Google reads use the actual app-server MCP catalog and exact read-tool allowlists, without a model turn, outgoing email, calendar edits, API billing, or copied OAuth tokens. Connection state is proven by native metadata; data freshness comes from the last successful fetch. Bound the brief to recent unread email and the current Manila calendar day. Preserve partial results and distinguish cached data from fresh data. Google refresh is a real queued worker job with observable actions, cancellation, and retry.
+
+Pixelpop remains the source of truth. Use its existing session-authenticated finance API for shared-workspace tasks and account-scoped nutrition. A dedicated backend cookie jar handles CSRF and session rotation. Persist only that isolated session in the private runtime directory; discard the sign-in password. Expose only allowlisted task, meal, goal, and weight operations. Never forward arbitrary URLs, upstream cookies, or credentials to the browser or execution log. Missing/expired authentication and unavailable services must remain explicit.
+
+Today opens in the dominant workspace through the horizontal controls. Overview, Tasks, Nutrition, and Connections use installed official shadcn JSX controls and inherited tokens. Source links and fetched timestamps identify Google data. Forms preserve inputs on errors and refresh from confirmed upstream results. Completed or automatic tasks respect Pixelpop's restrictions. Nutrition totals remain unknown when unlogged; there is no invented hydration integration or medical advice.
+
+Validate adapter auth/CSRF isolation, task-kind restrictions, date/number bounds, partial Google failures, tool allowlists, cancellation, and existing owner/approval boundaries. Verify live native Google access with a bounded read and no private-content logging. Browser QA covers disconnected/setup states and synthetic data explicitly labeled in fixtures, on desktop/mobile in light/dark. Do not mutate real Pixelpop records during validation.
