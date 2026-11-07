@@ -1,0 +1,155 @@
+{
+  "source": "user-roster-reference.png",
+  "sourceSha256": "2afa15c2ac561f44f51915264fd599095f0af175b27c073ee4cb4c909bf72137",
+  "sourceOriginal": "/tmp/codex-clipboard-98e4f6cd-e40b-457e-94c8-9404181a9042.png",
+  "credit": "Grand Chase character artwork by KOG; user-supplied roster reference. No affiliation is claimed.",
+  "selection": "User explicitly selected Grand Chase characters.",
+  "generation": false,
+  "processing": "Crop first-row character portraits from supplied pixels, preserve the artwork, resample108px, WebP95. The source contains only54px of portrait detail; resampling adds no new detail.",
+  "portraits": [
+    {
+      "character": "elesis",
+      "file": "src/assets/agents/elesis.webp",
+      "crop": {
+        "left": 15,
+        "top": 16,
+        "width": 54,
+        "height": 54
+      },
+      "sourceResolution": 54,
+      "encodedResolution": 108
+    },
+    {
+      "character": "lire",
+      "file": "src/assets/agents/lire.webp",
+      "crop": {
+        "left": 79,
+        "top": 16,
+        "width": 54,
+        "height": 54
+      },
+      "sourceResolution": 54,
+      "encodedResolution": 108
+    },
+    {
+      "character": "arme",
+      "file": "src/assets/agents/arme.webp",
+      "crop": {
+        "left": 142,
+        "top": 16,
+        "width": 54,
+        "height": 54
+      },
+      "sourceResolution": 54,
+      "encodedResolution": 108
+    },
+    {
+      "character": "lass",
+      "file": "src/assets/agents/lass.webp",
+      "crop": {
+        "left": 206,
+        "top": 16,
+        "width": 54,
+        "height": 54
+      },
+      "sourceResolution": 54,
+      "encodedResolution": 108
+    },
+    {
+      "character": "ryan",
+      "file": "src/assets/agents/ryan.webp",
+      "crop": {
+        "left": 269,
+        "top": 16,
+        "width": 54,
+        "height": 54
+      },
+      "sourceResolution": 54,
+      "encodedResolution": 108
+    },
+    {
+      "character": "ronan",
+      "file": "src/assets/agents/ronan.webp",
+      "crop": {
+        "left": 333,
+        "top": 16,
+        "width": 54,
+        "height": 54
+      },
+      "sourceResolution": 54,
+      "encodedResolution": 108
+    },
+    {
+      "character": "jin",
+      "file": "src/assets/agents/jin.webp",
+      "crop": {
+        "left": 396,
+        "top": 16,
+        "width": 54,
+        "height": 54
+      },
+      "sourceResolution": 54,
+      "encodedResolution": 108
+    },
+    {
+      "character": "amy",
+      "file": "src/assets/agents/amy.webp",
+      "crop": {
+        "left": 460,
+        "top": 16,
+        "width": 54,
+        "height": 54
+      },
+      "sourceResolution": 54,
+      "encodedResolution": 108
+    },
+    {
+      "character": "sieghart",
+      "file": "src/assets/agents/sieghart.webp",
+      "crop": {
+        "left": 523,
+        "top": 16,
+        "width": 54,
+        "height": 54
+      },
+      "sourceResolution": 54,
+      "encodedResolution": 108
+    },
+    {
+      "character": "mari",
+      "file": "src/assets/agents/mari.webp",
+      "crop": {
+        "left": 587,
+        "top": 16,
+        "width": 54,
+        "height": 54
+      },
+      "sourceResolution": 54,
+      "encodedResolution": 108
+    },
+    {
+      "character": "dio",
+      "file": "src/assets/agents/dio.webp",
+      "crop": {
+        "left": 650,
+        "top": 16,
+        "width": 54,
+        "height": 54
+      },
+      "sourceResolution": 54,
+      "encodedResolution": 108
+    },
+    {
+      "character": "zero",
+      "file": "src/assets/agents/zero.webp",
+      "crop": {
+        "left": 714,
+        "top": 16,
+        "width": 54,
+        "height": 54
+      },
+      "sourceResolution": 54,
+      "encodedResolution": 108
+    }
+  ]
+}

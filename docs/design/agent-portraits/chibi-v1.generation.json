@@ -1,0 +1,13 @@
+{
+  "generator": "OpenAI built-in image_gen",
+  "apiFallback": false,
+  "reference": "user-roster-reference.png",
+  "sourceFile": "chibi-v1-atlas.png",
+  "characters": "Grand Chase cast; fan-art chibi interpretation generated for Mari, not official game artwork.",
+  "prompt": "Generate a single coherent production sprite atlas of TWELVE recognizable GRAND CHASE characters, redrawn as cute CHIBI character-selection portrait icons closely matching the supplied reference. Input image1 is the identity and style reference, not a scene to reproduce. Exactly FOUR columns by THREE rows, twelve equal square cells, no gutters or margins, ideally1536x1152. Each has a big rounded chibi head, oversized clear eyes, small nose and mouth, tiny shoulders; head occupies about80% of its square. This must look like the small super-deformed game roster in the reference, NOT tall mature anime bust art. Matte softly cel-shaded2D game illustration with crisp contours, simple chunky hair locks and restrained shading; no glossy rendering, photorealism, neon, rim glow or lighting effects. Flat charcoal background in each cell. Keep whole hair crowns inside each cell. Row1 left to right: ELESIS red high ponytail and red/silver knight armor; LIRE blonde elf with pointed ears and green archer outfit; ARME purple bob and purple/gold mage collar; AMY pink twin ponytails with white/pink hair bows and performer collar. Row2: MARI blue bob, thin glasses, blue/red heterochromia and little gold crest with high white collar, reserved cold closed-lip expression; RONAN indigo-blue hair and blue/gold knight collar; LASS white fringe and blue scarf over dark ninja collar; ZERO long pale ash-blond hair, green/black outfit and amber eyes. Row3: JIN spiky red hair and white/red fighter outfit; DIO burgundy-purple fringe, pale face, pointed ears and black/purple demon collar; RYAN orange spiky hair, green headband and green druid collar; SIEGHART shaggy black hair and dark leather gladiator collar. Preserve recognizable Grand Chase character identities and canonical color coding from reference; these are fan-art chibi versions of the named cast, no invented replacement characters. No text, names, numbers, logos, badges, frames, borders, labels, watermarks, bodies, weapons or extra people. All twelve portrait cells consistently aligned and evenly sized, each easy to read at64px.",
+  "grid": {
+    "columns": 4,
+    "rows": 3
+  },
+  "processing": "Inset each equal cell2px to remove dividers; resize256px and encodeWebP92. Character IDs and saved selections preserved."
+}
