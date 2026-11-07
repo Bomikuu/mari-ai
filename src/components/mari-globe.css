@@ -1,0 +1,80 @@
+.mari-globe {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--globe-line);
+  --globe-outer-opacity: 0.5;
+  --globe-inner-opacity: 0.23;
+  --globe-orbit-opacity: 0.46;
+}
+
+.mari-globe-canvas,
+.mari-globe-fallback {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.44;
+}
+
+.mari-globe-canvas { visibility: hidden; }
+.mari-globe[data-renderer="webgl"] .mari-globe-canvas { visibility: visible; }
+.mari-globe[data-renderer="webgl"] .mari-globe-fallback { visibility: hidden; }
+.mari-globe[data-activity="working"] {
+  color: var(--globe-line-working);
+  --globe-outer-opacity: 0.62;
+  --globe-inner-opacity: 0.3;
+  --globe-orbit-opacity: 0.6;
+}
+.mari-globe[data-activity="running"] {
+  color: var(--globe-line-running);
+  --globe-outer-opacity: 0.54;
+  --globe-inner-opacity: 0.26;
+  --globe-orbit-opacity: 0.5;
+}
+.mari-globe[data-activity="offline"] {
+  color: var(--globe-line-muted);
+  --globe-outer-opacity: 0.4;
+  --globe-inner-opacity: 0.2;
+  --globe-orbit-opacity: 0.36;
+}
+.globe-fallback-outer { opacity: var(--globe-outer-opacity); }
+.globe-fallback-inner { opacity: var(--globe-inner-opacity); }
+.globe-fallback-orbit { opacity: var(--globe-orbit-opacity); }
+.globe-fallback-links { opacity: 0.24; }
+.globe-fallback-geometry path { vector-effect: non-scaling-stroke; }
+
+.mari-core .mari-globe-motion {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  pointer-events: auto;
+  color: var(--muted-foreground);
+  background: var(--core-surface);
+}
+.mari-core .mari-globe-motion:hover:not(:disabled) {
+  color: var(--foreground);
+  background: var(--accent);
+}
+.mari-core .mari-globe-motion:disabled { pointer-events: auto; }
+
+.mari-globe-fallback-note {
+  position: absolute;
+  top: 13px;
+  left: 12px;
+  right: 48px;
+  color: var(--muted-foreground);
+  font-size: 10px;
+  line-height: 1.4;
+  text-align: center;
+}
+.mari-core--portrait .mari-globe-fallback-note {
+  top: 14px;
+  left: 130px;
+  right: 50px;
+  text-align: right;
+}

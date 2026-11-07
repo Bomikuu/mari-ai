@@ -1,0 +1,47 @@
+.mari-eyes {
+  display: block;
+  width: min(224px, 100%);
+  height: auto;
+  flex: 0 0 auto;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.mari-eyes--compact { width: 48px; }
+
+.mari-eyes-sclera { fill: var(--identity-sclera); }
+.mari-eyes-ink-fill,
+.mari-eyes-upper-lids { fill: var(--identity-ink); }
+.mari-eyes-paper-fill { fill: var(--identity-paper); }
+.mari-eyes-gold-fill { fill: var(--identity-gold); }
+.mari-eyes-blue { fill: var(--identity-blue); }
+.mari-eyes-blue-dark { fill: var(--identity-blue-dark); }
+.mari-eyes-red { fill: var(--identity-red); }
+.mari-eyes-red-dark { fill: var(--identity-red-dark); }
+.mari-eyes-crest-inset { fill: var(--identity-blue); }
+
+.mari-eyes-iris-facet {
+  fill: var(--identity-paper);
+  opacity: 0.28;
+}
+
+.mari-eyes-brows {
+  stroke: var(--identity-outline);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  opacity: 0.7;
+}
+
+.mari-eyes-lower-lids {
+  stroke: var(--identity-ink);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+
+.mari-eyes-glasses,
+.mari-eyes-gold-line {
+  stroke: var(--identity-gold);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

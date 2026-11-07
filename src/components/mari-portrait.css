@@ -1,0 +1,64 @@
+.mari-portrait {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  width: min(var(--portrait-size, 230px), 100%);
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  overflow: hidden;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 600% 400%;
+  pointer-events: none;
+  /* Atlas changes select complete drawings without interpolating between them. */
+  transition: none;
+  animation: none;
+}
+
+.mari-portrait-fallback {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.mari-portrait-motion {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  color: var(--muted-foreground);
+  background: var(--core-surface);
+  pointer-events: auto;
+}
+
+.mari-portrait-motion:hover:not(:disabled) {
+  color: var(--foreground);
+  background: var(--accent);
+}
+
+.mari-portrait-motion:disabled { pointer-events: auto; }
+
+.mari-portrait-description {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .mari-portrait { width: min(var(--portrait-size, 196px), 100%); }
+}
