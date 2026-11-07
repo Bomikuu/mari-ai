@@ -1,0 +1,629 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-06T16:06:01Z",
+  "title": "Design System: Mari",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Restrained sapphire action accent"
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "Neutral light canvas"
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "White operational surface"
+      },
+      "input-surface": {
+        "role": "neutral",
+        "displayName": "Recessed field surface"
+      },
+      "focus-outline": {
+        "role": "primary",
+        "displayName": "Theme-aware sapphire/light and gold/dark focus outline"
+      },
+      "success": {
+        "role": "semantic",
+        "displayName": "Success green/teal"
+      },
+      "warning": {
+        "role": "semantic",
+        "displayName": "Waiting amber"
+      },
+      "destructive": {
+        "role": "semantic",
+        "displayName": "Destructive action rose"
+      },
+      "identity-blue": {
+        "role": "secondary",
+        "displayName": "Viewer-left blue iris",
+        "usage": "Retained theme-aware tokens for historical SVG identity source; no compact emblem is rendered, and the active raster portrait keeps its drawn colors."
+      },
+      "identity-blue-dark": {
+        "role": "secondary",
+        "displayName": "Blue iris shadow",
+        "usage": "Retained theme-aware tokens for historical SVG identity source; no compact emblem is rendered, and the active raster portrait keeps its drawn colors."
+      },
+      "identity-red": {
+        "role": "secondary",
+        "displayName": "Viewer-right red iris",
+        "usage": "Retained theme-aware tokens for historical SVG identity source; no compact emblem is rendered, and the active raster portrait keeps its drawn colors."
+      },
+      "identity-red-dark": {
+        "role": "secondary",
+        "displayName": "Red iris shadow",
+        "usage": "Retained theme-aware tokens for historical SVG identity source; no compact emblem is rendered, and the active raster portrait keeps its drawn colors."
+      },
+      "identity-gold": {
+        "role": "tertiary",
+        "displayName": "Muted-gold glasses and crest",
+        "usage": "Retained theme-aware tokens for historical SVG identity source; no compact emblem is rendered, and the active raster portrait keeps its drawn colors."
+      },
+      "identity-paper": {
+        "role": "neutral",
+        "displayName": "Identity highlights",
+        "usage": "Retained theme-aware tokens for historical SVG identity source; no compact emblem is rendered, and the active raster portrait keeps its drawn colors."
+      },
+      "identity-ink": {
+        "role": "neutral",
+        "displayName": "Identity pupils and lids",
+        "usage": "Retained theme-aware tokens for historical SVG identity source; no compact emblem is rendered, and the active raster portrait keeps its drawn colors."
+      },
+      "identity-sclera": {
+        "role": "neutral",
+        "displayName": "Identity sclera",
+        "usage": "Retained theme-aware tokens for historical SVG identity source; no compact emblem is rendered, and the active raster portrait keeps its drawn colors."
+      },
+      "identity-outline": {
+        "role": "neutral",
+        "displayName": "Identity brow outline",
+        "usage": "Retained theme-aware tokens for historical SVG identity source; no compact emblem is rendered, and the active raster portrait keeps its drawn colors."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "state-transition",
+        "value": "border-color 160ms ease, background-color 160ms ease, color 160ms ease",
+        "purpose": "Global button, link, input, textarea, and select state transitions."
+      },
+      {
+        "name": "busy-spin",
+        "value": "spin 1s linear infinite",
+        "purpose": "A busy indicator during an actual connecting or submitting operation."
+      },
+      {
+        "name": "dialog-duration",
+        "value": "200ms",
+        "purpose": "Duration declared by the shared dialog content primitive."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "Reduced-motion override for transition and animation duration; animation-iteration-count is 1."
+      },
+      {
+        "name": "portrait-frame-holds",
+        "value": "Front frames 0–11 at 240ms × 9 loops (25920ms); left 12–17–12 (3600ms) + neutral 0 (240ms); front × 10 loops (28800ms); right 18–23–18 (3600ms) + neutral 0 (240ms); repeat, 62400ms",
+        "purpose": "One pending timeout selects front-facing breathing and hair drawings by default, without a blink in frames 0–11. Rare one-sided leans use 180ms steps and an 1800ms peak; 29.04 seconds facing front separates the first gesture from the other. Independent of factual task or worker state; no crossfade or CSS bobbing."
+      },
+      {
+        "name": "portrait-motion-stops",
+        "value": "Neutral frame 0; pending timeout cleared",
+        "purpose": "Pause, reduced motion, hidden pages, and offscreen visibility clear the timer and reset neutral frame 0; resume restarts the full 25.92-second frontal breathing rest before a lean. One parent-owned control shares pause with the globe."
+      },
+      {
+        "name": "globe-render-limits",
+        "value": "30fps maximum; device pixel ratio capped at 1.5",
+        "purpose": "Restored faint Three.js globe retains pause, reduced-motion, hidden/offscreen, context-loss/restoration, static fallback, and cleanup safeguards."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "640px"
+      },
+      {
+        "name": "tablet",
+        "value": "960px"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "1250px"
+      },
+      {
+        "name": "wide-desktop",
+        "value": "1600px"
+      }
+    ],
+    "typographyMeta": {
+      "body": {
+        "displayName": "Interface body",
+        "purpose": "Global 14px base; operational contexts reduce the size in source."
+      },
+      "headline": {
+        "displayName": "Task title",
+        "purpose": "Selected task heading, reduced to 19px on mobile."
+      },
+      "panel-label": {
+        "displayName": "Technical section label",
+        "purpose": "Uppercase panel headings, reduced to 10px at compact widths."
+      },
+      "code": {
+        "displayName": "Execution and path text",
+        "purpose": "Commands, paths, and execution data; context-specific sizes are smaller."
+      }
+    },
+    "focus": {
+      "outline": "2px solid var(--focus-outline)",
+      "outlineOffset": "3px",
+      "componentRingColor": "var(--ring)",
+      "purpose": "Global keyboard focus outline is distinct from the shared component ring/border token."
+    },
+    "sourceProvenance": {
+      "method": "Source extraction and reconciliation of the unchanged neutral light / character-derived dark palettes, project/resource/profile workflows, v3 24-drawing portrait with frontal breathing and rare one-sided leans, bottom-anchored avatar, doubled projected globe diameter, shared motion control, and retained MARI/PERSONAL AI text. No computed-style measurement or fresh browser run.",
+      "tokenPrimitives": [
+        "src/themes.css :root light palette and :root[data-theme=\"dark\"] overrides",
+        "src/index.css @theme inline",
+        "src/index.css body, code, pre, .panel-heading h2, .title-line h1",
+        "src/themes.css retains identity tokens for historical SVG source. The active raster portrait keeps its drawn colors. MARI/PERSONAL AI text remains; the separate graphic illustration logo is removed."
+      ],
+      "componentSources": {
+        "Primary action": [
+          "src/components/ui/button.jsx default variant and default size",
+          "src/index.css [data-slot=\"button\"] and .review-buttons [data-slot=\"button\"]"
+        ],
+        "Secondary action": [
+          "src/components/ui/button.jsx outline variant and default size",
+          "src/index.css [data-slot=\"button\"] and .review-buttons [data-slot=\"button\"]"
+        ],
+        "Text field": [
+          "src/components/ui/input.jsx",
+          "src/index.css [data-slot=\"input\"], ::placeholder, input/textarea caret and global focus-visible"
+        ],
+        "Running status": [
+          "src/components/Primitives.jsx Status",
+          "src/index.css .status, .status-compact, .status-running"
+        ],
+        "Operational panel": [
+          "src/components/Primitives.jsx Panel",
+          "src/index.css .panel, .panel-heading, .panel-heading h2"
+        ],
+        "Local tab navigation": [
+          "src/components/ui/tabs.jsx",
+          "src/index.css .mari-tabs and its active trigger rules"
+        ],
+        "Workspace controls": [
+          "src/App.jsx workspace-tools and workspace-tool-buttons",
+          "src/components/ui/button.jsx ghost variant and sm size",
+          "src/index.css .workspace-tools, .workspace-tool-buttons, .tool-active and 640px override"
+        ],
+        "Installed skill inventory": [
+          "src/components/ResourcesManager.jsx skills view, context/scope filters and instruction panel",
+          "src/components/resources-manager.css .skills-layout, .resource-filter, .skill-row, .skill-content"
+        ],
+        "Configured profiles": [
+          "src/components/ResourcesManager.jsx profile list, editor, import review, export, starter templates and removal dialog",
+          "src/components/resources-manager.css .profiles-layout, .profile-toolbar, .profile-form, .profile-skills"
+        ],
+        "Project tables and saved scans": [
+          "src/components/ProjectManager.jsx saved and scan tabs",
+          "src/components/project-manager.css .manager-table-scroll, .manager-table and .scan-history"
+        ],
+        "Task profile selection": [
+          "src/App.jsx capture and design settings Agent profile select",
+          "src/components/TaskWorkspace.jsx task-profile-choice",
+          "src/index.css .task-profile-choice"
+        ],
+        "Theme control": [
+          "src/components/ThemeToggle.jsx",
+          "src/lib/theme.js",
+          "index.html pre-paint theme script",
+          "src/components/ui/button.jsx outline variant and sm size",
+          "src/index.css .theme-toggle",
+          "node_modules/lucide-react/dist/esm/icons/moon.js inline SVG path"
+        ],
+        "Mari avatar and globe": [
+          "src/components/Primitives.jsx Core lazy-loaded portrait and globe, sizeScale={2}, retained MARI/PERSONAL AI text, shared pause state, and factual caption",
+          "src/components/MariPortrait.jsx role=img and atlas mapping",
+          "src/lib/portrait-motion.js front-facing breathing cycles, occasional one-sided lean clips, and frame holds",
+          "src/components/mari-portrait.css absolute bottom:0 z-index 1 portrait, 600% 400% background-size, 230px/196px dimensions",
+          "src/assets/mari-portrait-atlas-v3.png actual generated 24-drawing raster atlas",
+          "src/components/MariGlobe.jsx sizeScale doubles base projected diameter and SVG fallback geometry; src/components/mari-globe.css absolute z-index 0 globe at 0.44 opacity",
+          "src/index.css .mari-core--portrait, .portrait-wordmark, top-positioned .core-caption and responsive overrides"
+        ],
+        "Avatar and globe motion control": [
+          "src/components/Primitives.jsx Core controlled pause state, reduced-motion preference and core-motion-control Button",
+          "src/components/MariPortrait.jsx paused prop; showControls defaults false",
+          "src/components/MariGlobe.jsx paused prop; showControls defaults false",
+          "src/components/ui/button.jsx ghost variant and icon-sm size",
+          "src/index.css .core-motion-control, shared button radius, focus, and transitions",
+          "node_modules/lucide-react/dist/esm/icons/pause.js inline SVG rectangles"
+        ]
+      },
+      "layoutAndMotion": [
+        "src/index.css .command-center, .workspace-tools, .top-panels, .middle-panels, .lower-panels, .command-dock, .comparison-grid",
+        "src/index.css @media rules, .busy-spin and reduced-motion override",
+        "src/components/project-manager.css project/scan tables and mobile wrapping",
+        "src/components/resources-manager.css resource columns, scroll regions and 960px/640px breakpoints",
+        "src/components/MariPortrait.jsx shared image preload, discrete timeout sequence, pause, reduced-motion, visibility, intersection, fallback and cleanup",
+        "src/components/mari-portrait.css sprite dimensions, background-size, no interpolation, motion control and accessible description",
+        "src/components/ui/dialog.jsx",
+        "src/components/Primitives.jsx bottom-anchored portrait plus globe at sizeScale={2}, retained title/subtitle, and one parent-owned shared Pause/Resume control",
+        "src/components/MariGlobe.jsx renderer at 30fps maximum / pixel ratio 1.5 with static fallback, pause, reduced motion, visibility, context loss/restoration, and disposal",
+        "src/components/mari-globe.css absolute z-index 0 and opacity 0.44; src/components/mari-portrait.css transparent z-index 1",
+        "src/App.jsx MARI/PERSONAL AI text in header home control, pairing, and loading views; graphic illustration logo removed",
+        "src/lib/portrait-motion.js 2.88-second frontal breathing loop, 25.92-second initial frontal rest, 29.04-second frontal rest before the other lean, 3.6-second gestures, and 62.4-second cycle"
+      ],
+      "surfaceContract": ".impeccable/surfaces/command-center.md",
+      "selectedVisualReference": "docs/design/mari-command-center-v2.png remains composition authority. Latest correction uses the v3 atlas for front-facing breathing by default and rare one-sided leans after long frontal rests, anchors the portrait at Core’s bottom, doubles the globe’s base projected diameter, and retains MARI/PERSONAL AI text while removing only the separate graphic illustration logo. The Mari-derived dark palette remains unchanged. The supplied Grand Chase Mari art (/tmp/codex-clipboard-9b8dfdc1-b94d-4ef0-9c74-11fe72d88509.png) and official https://gcc.playpark.com/update/get-acquainted-with-the-awesome-characters/ inform the appearance. Cold and robotic is user art direction, not a literal android claim. Historical references and reviews retain their original scope.",
+      "reviewRecord": "docs/verification.md records current verification; docs/design/portrait-finish-review.md remains the historical v1 portrait review.",
+      "tonalRamps": "Omitted: the source defines two explicit palettes, not tonal ramps; no new palette tokens were synthesized.",
+      "previewScope": "Source-derived static snapshots of representative contexts, using current CSS variables and light fallbacks. Host supplies theme tokens. The avatar/globe specimen depends on ../src/assets/mari-portrait-atlas-v3.png resolved relative to .impeccable/; it shows neutral frame 0 anchored at the bottom, MARI/PERSONAL AI text at upper-left, and inert faint SVG geometry scaled by two around its center. It runs neither raster playback nor WebGL and embeds no image. Resource, theme, and motion buttons are inert samples. Framework behavior/computed cascade are not re-executed; browser QA and motion smoothness are not claimed.",
+      "tokenCounts": {
+        "lightColors": 49,
+        "darkColors": 49
+      }
+    },
+    "resourceContracts": {
+      "workspaceControls": "Horizontal Projects, Scan folder, Skills, and Agents controls below the header; active context uses primary text on the accent surface. Controls wrap, and the summary hides at 640px.",
+      "projects": "Complete searchable saved-project table with paths, detection, Git, observed health, and independent service controls. Tables preserve internal horizontal scrolling.",
+      "folderScans": "Explicit root scan with bounded discovery, errors, timestamps, and truncation feedback. Saved roots expose available result snapshots separately from Rescan. Candidate registration is explicit and starts no services.",
+      "skillInventory": "Native installed Codex inventory defaults to Mari · installed, with Selected project as a separate context. Search, scope, enabled state, local/plugin source, and readable instructions remain visible. Viewing instructions runs no skill.",
+      "profiles": "Reusable configured Codex roles with editable instructions, enabled state, and selected-project installed skill bindings. JSON import is reviewed before saving; JSON export and starter-profile installation are available. Profiles are separate from live executions.",
+      "taskChoice": "New-task settings and task workspace select Default Codex or an available enabled profile for the next AI action. Running jobs retain captured profile instructions. Configuration cannot grant writes, approve images, change billing, or bypass workflow rules.",
+      "responsive": "Skills list/detail and profile list/editor columns stack at 960px. At 640px, profile fields and binding checkboxes use one column; toolbar actions wrap."
+    },
+    "themes": {
+      "base": "light",
+      "source": "src/themes.css",
+      "runtimeSelection": "Use a valid saved mari.theme choice, otherwise prefers-color-scheme. Light is the base token set, not a forced runtime preference.",
+      "dark": {
+        "selector": ":root[data-theme=\"dark\"]",
+        "colorScheme": "dark",
+        "colors": {
+          "background": "#0a0d18",
+          "foreground": "#e9edf8",
+          "card": "#11172a",
+          "panel": "#11172a",
+          "popover": "#1b233b",
+          "input-surface": "#10182b",
+          "core-surface": "#0c1325",
+          "log-surface": "#10182b",
+          "primary": "#91b8ef",
+          "primary-hover": "#b0ccf3",
+          "primary-foreground": "#111e35",
+          "secondary": "#1e2944",
+          "muted": "#19223a",
+          "muted-foreground": "#abbad3",
+          "text-secondary": "#ccd5e8",
+          "accent": "#273654",
+          "link": "#b0ccf3",
+          "success": "#83d4bb",
+          "success-foreground": "#05251f",
+          "warning": "#dfbe80",
+          "info": "#91b8ef",
+          "destructive": "#e98599",
+          "destructive-fill": "#b9344c",
+          "destructive-foreground": "#ffffff",
+          "error-surface": "#351d2a",
+          "error-border": "#c36b83",
+          "notice-surface": "#19223a",
+          "border": "#303d58",
+          "panel-border": "#3a4560",
+          "input": "#7184a7",
+          "ring": "#d0af75",
+          "focus-outline": "#d0af75",
+          "selection": "#3b5178",
+          "selection-foreground": "#f4f7ff",
+          "scrollbar": "#7184a7",
+          "scrollbar-track": "#10182b",
+          "globe-line": "#91aace",
+          "globe-line-working": "#b0ccf3",
+          "globe-line-running": "#9ab8df",
+          "globe-line-muted": "#a2aec5",
+          "identity-blue": "#91b8ef",
+          "identity-blue-dark": "#385a87",
+          "identity-red": "#e98599",
+          "identity-red-dark": "#873e59",
+          "identity-gold": "#d0af75",
+          "identity-paper": "#fff7e8",
+          "identity-ink": "#111e35",
+          "identity-sclera": "#e9edf8",
+          "identity-outline": "#b6c5df"
+        }
+      },
+      "initialization": "index.html resolves the theme before the application renders and sets data-theme, the .dark class, and meta theme-color (#f6f6f6 light / #0a0d18 dark).",
+      "control": "Header outlined Light/Dark button with Sun/Moon icon; visible and accessible labels name the mode it activates. Explicit choices persist locally; operating-system changes apply until a choice is saved. Storage events synchronize tabs. Storage failure still permits the current tab to switch.",
+      "paletteAuthority": "The character-derived dark palette uses Mari’s midnight coat, blue hair, gold, and rose details and supersedes the earlier pure-black requirement. Light remains neutral. The latest correction changes motion and layout: v3 front-facing breathing with rare one-sided leans after long rests, bottom-anchored portrait, twice the base projected globe diameter, and retained MARI/PERSONAL AI text. Only the separate graphic illustration logo is removed. Cold and robotic remains user art direction, not a literal android claim."
+    },
+    "mariIdentity": {
+      "reference": "User-supplied Grand Chase Mari character art and official PlayPark introduction https://gcc.playpark.com/update/get-acquainted-with-the-awesome-characters/; cold and robotic is user art direction, not a literal android claim.",
+      "illustration": "Generated 2D raster full head and upper shoulders, blue bob, viewer-left blue and viewer-right red irises, thin glasses, gold crest and high collar. V3 has 24 drawings: front-facing breathing and hair motion in frames 0–11 without a blink, with separate left/right lean drawings in frames 12–17 and 18–23. Keep a cold, closed-lip expression.",
+      "layout": "Base desktop Core min-height 330px; portrait 230px square, absolute bottom:0 left:50% translateX(-50%). At 640px Core min-height 300px and portrait 196px. No flex gap or padding. MARI/PERSONAL AI text at top:16px left:16px; factual caption at top:61px left:16px right:54px. Transparent portrait z-index 1 over absolute inset globe z-index 0, opacity 0.44. Core sizeScale={2} doubles the globe’s base projected radius/diameter and SVG fallback geometry within the same clipped host. Source breakpoint rules govern the complete cascade.",
+      "stateContract": "Portrait motion and fixed eye colors do not convey execution, errors, listening, or talking. The separate caption remains factual. Pause, reduced motion, hidden pages, and offscreen visibility reset the portrait to neutral frame 0; resume restarts the full frontal breathing rest before a lean. Globe styling may reflect factual activity without ambient motion establishing execution.",
+      "logoContract": "Remove only the separate graphic illustration logo/emblem. BrandMark export is removed. Retain MARI text title and PERSONAL AI subtitle in Core, header home button, pairing, and loading views. The header home control retains aria-label Command center home."
+    },
+    "historicalIdentity": {
+      "status": "The v1 six-frame eye-focused atlas, v2 continuous side-motion/blink atlas, still SVG eye treatment, prior portrait-only core, and earlier pure-black palette are superseded by the latest direction.",
+      "sources": [
+        "src/assets/mari-portrait-atlas-v1.png",
+        "src/assets/mari-portrait-atlas-v2.png",
+        "src/components/MariEyes.jsx",
+        "src/components/mari-eyes.css"
+      ],
+      "reference": "https://pixelsbymiku.dev/ informed an earlier geodesic identity stage. Historical specifications and reviews retain their original scope; the Three.js globe is now active again.",
+      "retainedTokens": "Identity tokens remain in src/themes.css for historical SVG source. Globe-line tokens are active in the restored globe; the raster portrait retains its drawn colors.",
+      "loading": "Core lazy-loads both MariPortrait and MariGlobe; it does not render MariEyes or BrandMark."
+    },
+    "portraitAnimation": {
+      "renderer": "CSS background positions select complete raster drawings. background-size 600% 400%, transparent absolute bottom-anchored surface at z-index 1; no CSS animation, transition, bobbing, crossfade, morphing, or interpolation.",
+      "asset": {
+        "path": "src/assets/mari-portrait-atlas-v3.png",
+        "format": "PNG RGBA",
+        "width": 1536,
+        "height": 1024,
+        "columns": 6,
+        "rows": 4,
+        "cellWidth": 256,
+        "cellHeight": 256,
+        "frameCount": 24,
+        "generation": "Built-in image-generation output; no API fallback. Asset provenance is recorded in docs/design/mari-portrait-assets.md.",
+        "frameContract": "Frames 0–11 are front-facing breathing without a blink. Frames 12–17 draw the left lean, frames 18–23 the right lean; each gesture returns through its own drawings to frontal neutral frame 0."
+      },
+      "sequence": [
+        {
+          "phase": "breathing",
+          "frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "holdMs": 240,
+          "repeat": 9,
+          "durationMs": 25920
+        },
+        {
+          "phase": "lean-left",
+          "frames": [
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            16,
+            15,
+            14,
+            13,
+            12
+          ],
+          "holdMs": 180,
+          "peakFrame": 17,
+          "peakHoldMs": 1800,
+          "durationMs": 3600
+        },
+        {
+          "phase": "breathing",
+          "frames": [
+            0
+          ],
+          "holdMs": 240,
+          "repeat": 1,
+          "durationMs": 240
+        },
+        {
+          "phase": "breathing",
+          "frames": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "holdMs": 240,
+          "repeat": 10,
+          "durationMs": 28800
+        },
+        {
+          "phase": "lean-right",
+          "frames": [
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            22,
+            21,
+            20,
+            19,
+            18
+          ],
+          "holdMs": 180,
+          "peakFrame": 23,
+          "peakHoldMs": 1800,
+          "durationMs": 3600
+        },
+        {
+          "phase": "breathing",
+          "frames": [
+            0
+          ],
+          "holdMs": 240,
+          "repeat": 1,
+          "durationMs": 240
+        }
+      ],
+      "cycle": {
+        "steps": 252,
+        "uniqueDrawings": 24,
+        "durationMs": 62400,
+        "breathingLoopMs": 2880,
+        "initialFrontalRestMs": 25920,
+        "frontalRestBeforeRightMs": 29040,
+        "gestureMs": 3600,
+        "neutralReturnMs": 240,
+        "order": "front × 9 → left lean → neutral → front × 10 → right lean → neutral; repeat",
+        "description": "Front-facing breathing is the default; only one lean runs at a time, followed by a long frontal rest. Timings are extracted from src/lib/portrait-motion.js and do not establish browser QA or motion smoothness."
+      },
+      "stateContract": "Decorative and independent of execution, connectivity, service health, and task status. Receives no execution or availability props. No simulated talking/listening; factual caption remains separate.",
+      "control": "Core owns one official ghost icon-sm Button with Pause avatar and globe animation / Resume avatar and globe animation labels. It controls both children through the same paused prop. Child controls remain hidden (showControls=false). Reduced motion disables the shared control; child loading/failure does not.",
+      "visibility": "document.visibilitychange and IntersectionObserver clear the timer and reset frame 0 when hidden/offscreen; resuming restarts the full frontal rest. Passive scroll/resize listeners are the IntersectionObserver fallback.",
+      "reducedMotion": "prefers-reduced-motion takes precedence over Resume, clears the timer, resets neutral frame 0 and the sequence to the full frontal rest, and disables the parent control.",
+      "loadingAndFailure": "Shared preload awaits decode and validates nonzero six-by-four dimensions with square cells. Loading portrait… is plain text; load/decode/shape failure shows Portrait unavailable. Reload to retry. Description explains the state.",
+      "lifecycle": "One pending timeout. Unmount clears it, disconnects observer, removes media/visibility/viewport listeners, clears runtimeRef, and guards pending load callbacks after disposal.",
+      "accessibility": "role=img with Mari character portrait label, aria-busy during loading, and per-instance useId description. Description explains decorative independence, pause, reduced motion, loading, or failure.",
+      "theme": "Surrounding CSS surfaces and globe lines follow selected theme. Raster atlas retains its drawn colors; MARI/PERSONAL AI text remains and the separate graphic illustration logo is removed.",
+      "source": [
+        "src/components/MariPortrait.jsx",
+        "src/lib/portrait-motion.js",
+        "src/components/mari-portrait.css"
+      ]
+    },
+    "globeAnimation": {
+      "source": [
+        "src/components/MariGlobe.jsx",
+        "src/components/mari-globe.css"
+      ],
+      "composition": "Active lazy-loaded Three.js globe sits behind the bottom-anchored avatar. Absolute inset 0, z-index 0, opacity 0.44; transparent portrait z-index 1. Core supplies sizeScale={2}: resize doubles the base projected radius/diameter, and the SVG fallback scales geometry by two around its center. Host bounds and clipping remain unchanged.",
+      "renderLimits": {
+        "maximumFramesPerSecond": 30,
+        "maximumPixelRatio": 1.5
+      },
+      "control": "Same parent-owned paused prop as portrait; own showControls remains false. Reduced motion, pause, hidden pages, and offscreen visibility stop the rendering loop.",
+      "status": "Theme/activity line styling reflects factual activity inputs. Ambient movement does not establish execution; the caption states actual task/worker status.",
+      "fallbackAndLifecycle": "Static SVG fallback for unavailable WebGL or context loss; context restoration resumes permitted rendering. Cleanup stops the animation loop, removes listeners/observers, disposes geometries/materials/renderer, and clears the scene.",
+      "size": {
+        "coreSizeScale": 2,
+        "baseRadius": "min(hostWidth * 0.3, hostHeight * 0.38, 132)",
+        "projectedDiameter": "baseRadius * sizeScale * 2",
+        "fallbackTransform": "translate(180 153) scale(2) translate(-180 -153)",
+        "diagnostics": "WebGL resize exposes data-base-projected-diameter and data-projected-diameter on the host when it has size."
+      }
+    }
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Affirmative image-review action, using the review context's 11px type and the shared 36px base height.",
+      "html": "<button class=\"ds-primary\">Approve image</button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;background:var(--primary,#315da5);color:var(--primary-foreground,#ffffff);border:0;border-radius:5px;padding:8px 16px;font:500 11px/1.5 Inter,\"Segoe UI\",system-ui,sans-serif;cursor:pointer;box-shadow:none;transition:border-color 160ms ease,background-color 160ms ease,color 160ms ease;}.ds-primary:hover:not(:disabled){background:color-mix(in oklab,var(--primary,#315da5) 90%,transparent)}.ds-primary:focus-visible{outline:2px solid var(--focus-outline,#315da5);outline-offset:3px;}.ds-primary:disabled{opacity:.5;pointer-events:none}"
+    },
+    {
+      "name": "Secondary action",
+      "kind": "button",
+      "description": "Outlined revision action from the shared button primitive and compact review context. Dark styling follows the selected root theme, including a manual choice.",
+      "html": "<button class=\"ds-secondary\">Request revision</button>",
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;background:var(--background,#f6f6f6);color:var(--foreground,#171717);border:1px solid var(--border,#cacaca);border-radius:5px;padding:8px 16px;font:500 11px/1.5 Inter,\"Segoe UI\",system-ui,sans-serif;cursor:pointer;box-shadow:none;transition:border-color 160ms ease,background-color 160ms ease,color 160ms ease;}.ds-secondary:hover:not(:disabled){background:var(--accent,#e2e2e2)}.ds-secondary:focus-visible{border-color:var(--ring,#315da5);outline:2px solid var(--focus-outline,#315da5);outline-offset:3px;}.ds-secondary:disabled{opacity:.5;pointer-events:none}:host-context([data-theme=\"dark\"]) .ds-secondary{background:color-mix(in oklab,var(--input,#767676) 30%,transparent);border-color:var(--input,#767676)}:host-context([data-theme=\"dark\"]) .ds-secondary:hover:not(:disabled){background:color-mix(in oklab,var(--input,#767676) 50%,transparent)}"
+    },
+    {
+      "name": "Theme control",
+      "kind": "button",
+      "description": "Static light-mode specimen of the header control; label names the dark mode it will activate. The live component switches to Sun + Light in dark mode and handles persistence.",
+      "html": "<button class=\"ds-theme-control\" aria-label=\"Switch to dark mode\" title=\"Switch to dark mode\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\"/></svg><span>Dark</span></button>",
+      "css": ".ds-theme-control{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;background:var(--background,#f6f6f6);color:var(--foreground,#171717);border:1px solid var(--border,#cacaca);border-radius:5px;padding:0 10px;font:500 12px/1.5 Inter,\"Segoe UI\",system-ui,sans-serif;cursor:pointer;box-shadow:none;transition:border-color 160ms ease,background-color 160ms ease,color 160ms ease;}.ds-theme-control:hover:not(:disabled){background:var(--accent,#e2e2e2)}.ds-theme-control:focus-visible{border-color:var(--ring,#315da5);outline:2px solid var(--focus-outline,#315da5);outline-offset:3px;}.ds-theme-control:disabled{opacity:.5;pointer-events:none}:host-context([data-theme=\"dark\"]) .ds-theme-control{background:color-mix(in oklab,var(--input,#767676) 30%,transparent);border-color:var(--input,#767676)}:host-context([data-theme=\"dark\"]) .ds-theme-control:hover:not(:disabled){background:color-mix(in oklab,var(--input,#767676) 50%,transparent)}.ds-theme-control svg{width:15px;height:15px;flex-shrink:0}"
+    },
+    {
+      "name": "Text field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Shared standalone text field. The command dock applies a separate transparent inner-field treatment.",
+      "html": "<input class=\"ds-input\" placeholder=\"Project name\" aria-label=\"Project name\" />",
+      "css": ".ds-input{height:36px;min-width:0;background:var(--input-surface,#fafafa);color:var(--foreground,#171717);border:1px solid var(--input,#767676);border-radius:5px;padding:4px 12px;font:400 16px/1.5 Inter,\"Segoe UI\",system-ui,sans-serif;caret-color:var(--primary,#315da5);box-shadow:none;transition:border-color 160ms ease,background-color 160ms ease,color 160ms ease;}.ds-input::placeholder{color:var(--muted-foreground,#585858);opacity:1}.ds-input:focus-visible{border-color:var(--ring,#315da5);outline:2px solid var(--focus-outline,#315da5);outline-offset:3px;}.ds-input:disabled{opacity:.65;cursor:not-allowed;pointer-events:none}.ds-input[aria-invalid=\"true\"]{border-color:var(--destructive,#aa2438)}@media(min-width:768px){.ds-input{font-size:14px}}"
+    },
+    {
+      "name": "Running status",
+      "kind": "chip",
+      "description": "Compact factual status: unfilled dot and text, never color alone.",
+      "html": "<span class=\"ds-status\"><i aria-hidden=\"true\"></i>Running</span>",
+      "css": ".ds-status{display:inline-flex;gap:6px;align-items:center;color:var(--success,#08734e);font:400 11px/1.5 Inter,\"Segoe UI\",system-ui,sans-serif;white-space:nowrap;text-transform:capitalize}.ds-status i{height:7px;width:7px;border-radius:50%;background:var(--success,#08734e);flex-shrink:0}"
+    },
+    {
+      "name": "Operational panel",
+      "kind": "card",
+      "refersTo": "operational-panel",
+      "description": "Matte operational region with a neutral divider and compact uppercase secondary-text heading.",
+      "html": "<section class=\"ds-panel\"><header class=\"ds-panel-heading\"><h2>Live activity</h2></header><p>Observable execution events appear here.</p></section>",
+      "css": ".ds-panel{background:var(--panel,#ffffff);color:var(--foreground,#171717);border:1px solid var(--panel-border,#c7c7c7);border-radius:7px;padding:0 15px 14px;min-width:0;overflow:hidden;font:400 14px/1.5 Inter,\"Segoe UI\",system-ui,sans-serif}.ds-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:42px;margin-bottom:10px;border-bottom:1px solid var(--border,#cacaca)}.ds-panel-heading h2{margin:0;color:var(--text-secondary,#414141);text-transform:uppercase;font-size:11px;letter-spacing:.18em;font-weight:650;line-height:1.35}.ds-panel p{margin:0}"
+    },
+    {
+      "name": "Local tab navigation",
+      "kind": "nav",
+      "description": "In-place task or project detail tabs; selection uses a panel fill, primary text, and input stroke with compact trigger corners.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\" aria-label=\"Task details\"><button class=\"ds-tab\" role=\"tab\" aria-selected=\"true\">Instruction &amp; scope</button><button class=\"ds-tab\" role=\"tab\" aria-selected=\"false\">Completed steps</button></div>",
+      "css": ".ds-tabs{display:inline-flex;gap:3px;padding:3px;max-width:100%;background:var(--secondary,#e9e9e9);border:1px solid var(--border,#cacaca);border-radius:5px}.ds-tab{border:1px solid transparent;border-radius:3px;padding:6px 12px;font:500 11px/1.5 Inter,\"Segoe UI\",system-ui,sans-serif;color:var(--text-secondary,#414141);background:transparent;white-space:nowrap;box-shadow:none;cursor:pointer;transition:border-color 160ms ease,background-color 160ms ease,color 160ms ease;}.ds-tab:hover{color:var(--foreground,#171717)}.ds-tab[aria-selected=\"true\"]{color:var(--primary,#315da5);background:var(--panel,#ffffff);border-color:var(--input,#767676)}.ds-tab:focus-visible{outline:2px solid var(--focus-outline,#315da5);outline-offset:3px;}@media(max-width:640px){.ds-tabs{width:100%;overflow-x:auto;justify-content:flex-start}.ds-tab{font-size:9px;padding:6px 9px}}"
+    },
+    {
+      "name": "Workspace controls",
+      "kind": "nav",
+      "description": "Source-derived compact ghost controls for in-place project and Codex resource views; this specimen omits icons and the live summary.",
+      "html": "<nav class=\"ds-workspace-tools\" aria-label=\"Workspace tools\"><div class=\"ds-workspace-buttons\"><button class=\"ds-workspace-button\" aria-pressed=\"false\">Projects</button><button class=\"ds-workspace-button\" aria-pressed=\"false\">Scan folder</button><button class=\"ds-workspace-button\" aria-pressed=\"true\">Skills</button><button class=\"ds-workspace-button\" aria-pressed=\"false\">Agents</button></div></nav>",
+      "css": ".ds-workspace-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--border,#cacaca);padding:8px 0;font:400 14px/1.5 Inter,\"Segoe UI\",system-ui,sans-serif}.ds-workspace-buttons{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.ds-workspace-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:32px;padding:0 12px;border:0;border-radius:5px;background:transparent;color:var(--foreground,#171717);font:500 14px/1.5 Inter,\"Segoe UI\",system-ui,sans-serif;box-shadow:none;cursor:pointer;white-space:nowrap;transition:border-color 160ms ease,background-color 160ms ease,color 160ms ease}.ds-workspace-button:hover{background:var(--accent,#e2e2e2)}.ds-workspace-button[aria-pressed=\"true\"]{color:var(--primary,#315da5);background:var(--accent,#e2e2e2)}.ds-workspace-button:focus-visible{outline:2px solid var(--focus-outline,#315da5);outline-offset:3px}.ds-workspace-button:disabled{opacity:.5;pointer-events:none}@media(max-width:640px){.ds-workspace-buttons{gap:2px}}@media(prefers-reduced-motion:reduce){.ds-workspace-button{transition-duration:.01ms}}"
+    },
+    {
+      "name": "Mari avatar and globe",
+      "kind": "custom",
+      "description": "Inert source-derived composition: v3 neutral atlas frame 0 anchored at the bottom, retained MARI text title and PERSONAL AI subtitle, and faint SVG geometry scaled by two to represent the enlarged globe. Uses ../src/assets/mari-portrait-atlas-v3.png relative to .impeccable/. Executes neither raster playback nor WebGL; no separate graphic illustration logo.",
+      "html": "<div class=\"ds-mari-core\"><svg class=\"ds-mari-globe\" viewBox=\"0 0 360 306\" fill=\"none\" aria-hidden=\"true\"><g class=\"ds-globe-geometry\" transform=\"translate(180 153) scale(2) translate(-180 -153)\" stroke=\"currentColor\" stroke-width=\".7\"><ellipse cx=\"180\" cy=\"153\" rx=\"112\" ry=\"112\"/><ellipse cx=\"180\" cy=\"153\" rx=\"57\" ry=\"112\"/><ellipse cx=\"180\" cy=\"153\" rx=\"112\" ry=\"47\"/><path d=\"M68 153h224M180 41v224M85 94l190 118M85 212 275 94M124 56l112 194M124 250 236 56\"/><ellipse cx=\"180\" cy=\"153\" rx=\"137\" ry=\"32\" transform=\"rotate(-18 180 153)\"/></g></svg><div class=\"ds-mari-portrait\" role=\"img\" aria-label=\"Mari character portrait\" aria-describedby=\"ds-portrait-description\"></div><div class=\"ds-mari-title\"><span>MARI</span><small>PERSONAL AI</small></div><span id=\"ds-portrait-description\" class=\"ds-portrait-description\">Static v3 neutral frame 0 at the bottom, with retained title text and inert globe geometry scaled by two. The live decorative portrait is independent of task activity.</span></div>",
+      "css": ".ds-mari-core{position:relative;display:flex;align-items:center;justify-content:center;min-width:0;min-height:330px;padding:0;background:var(--core-surface,#fafafa);border:1px solid var(--panel-border,#c7c7c7);border-radius:7px;overflow:hidden}.ds-mari-globe{position:absolute;inset:0;z-index:0;width:100%;height:100%;color:var(--globe-line,#526f9d);opacity:.44;pointer-events:none}.ds-globe-geometry>*{vector-effect:non-scaling-stroke}.ds-mari-portrait{position:absolute;bottom:0;left:50%;transform:translateX(-50%);z-index:1;width:min(230px,100%);aspect-ratio:1;flex:0 0 auto;overflow:hidden;background-color:transparent;background-image:url(\"../src/assets/mari-portrait-atlas-v3.png\");background-repeat:no-repeat;background-size:600% 400%;background-position:0% 0%;pointer-events:none;transition:none;animation:none}.ds-mari-title{position:absolute;top:16px;left:16px;z-index:2;text-align:left;pointer-events:none;font-family:Inter,\"Segoe UI\",system-ui,sans-serif}.ds-mari-title>span{display:block;color:var(--primary,#315da5);font-size:20px;line-height:1.1;font-weight:600;letter-spacing:.28em}.ds-mari-title small{display:block;color:var(--text-secondary,#414141);font-size:7px;line-height:1.5;letter-spacing:.26em;margin-top:1px}.ds-portrait-description{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}@media(max-width:640px){.ds-mari-core{min-height:300px}.ds-mari-portrait{width:min(196px,100%)}}"
+    },
+    {
+      "name": "Avatar and globe motion control",
+      "kind": "button",
+      "description": "Inert Pause specimen of the single parent-owned ghost icon control. Live Core shares controlled pause with both children and hides their controls. Reduced motion disables it; child loading/failure does not. Pausing resets portrait frame 0 and stops globe motion; resume restarts the full frontal rest before a lean.",
+      "html": "<button class=\"ds-portrait-motion\" type=\"button\" aria-label=\"Pause avatar and globe animation\" title=\"Pause avatar and globe animation\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"14\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"/><rect x=\"6\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"/></svg></button>",
+      "css": ".ds-portrait-motion{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;border:0;border-radius:5px;background:var(--core-surface,#fafafa);color:var(--muted-foreground,#585858);box-shadow:none;cursor:pointer;transition:border-color 160ms ease,background-color 160ms ease,color 160ms ease}.ds-portrait-motion svg{width:14px;height:14px;flex-shrink:0;pointer-events:none}.ds-portrait-motion:hover:not(:disabled){color:var(--foreground,#171717);background:var(--accent,#e2e2e2)}.ds-portrait-motion:focus-visible{outline:2px solid var(--focus-outline,#315da5);outline-offset:3px}.ds-portrait-motion:disabled{opacity:.5;cursor:not-allowed;pointer-events:auto}@media(prefers-reduced-motion:reduce){.ds-portrait-motion{transition-duration:.01ms}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Private operational command center",
+    "overview": "Mari preserves the user's selected second concept's compact command-center composition, central assistant area, and readable operational panels. The composition reference is `docs/design/mari-command-center-v2.png`; the first generated concept was rejected. The latest correction uses the v3 24-drawing portrait for front-facing breathing by default, with rare one-sided leans after long frontal rests. The avatar sits at Core’s bottom with a faint Three.js globe behind it at twice its base projected diameter. Retain the MARI text title and PERSONAL AI subtitle; remove only the separate graphic illustration logo. The dark palette still derives from Mari’s coat, hair, gold, and red details. That palette supersedes the earlier pure-black direction. The supplied Grand Chase Mari reference and official [PlayPark character introduction](https://gcc.playpark.com/update/get-acquainted-with-the-awesome-characters/) inform a blue bob, blue/red eyes, thin glasses, gold crest, and high collar. A cold, robotic personality is the user's art direction, not a claim that the character is literally an android.\n\nThe home view establishes project, worker, task, and artifact context. Selecting a task enlarges its actual images and decisions in the same page. Horizontal workspace controls expose project management, explicit folder scans, installed Codex skills, and reusable agent profiles. Product state comes from observable execution; configured profiles remain separate from live executions. The portrait uses front-facing drawn breathing and hair motion, with a rare lean to one side, a return to front, and a long rest before another gesture. Keep its reserved expression and closed lips; the first 12 breathing drawings contain no blink. Its animation is decorative and independent of task activity; the factual caption remains separate.",
+    "keyCharacteristics": [
+      "Neutral light surfaces and a Mari-inspired midnight dark palette",
+      "A bottom-anchored 2D portrait with frontal breathing, rare one-sided leans, and a faint enlarged globe behind it",
+      "Blue actions, gold focus, and restrained rose details",
+      "Observable execution and dominant selected artifacts",
+      "MARI text title and PERSONAL AI subtitle, without a separate graphic illustration logo or navigation sidebar"
+    ],
+    "rules": [],
+    "dos": [
+      "Do preserve the selected reference's compact command-center composition on this surface.",
+      "Do preserve light mode and the latest character-derived dark palette through shared semantic tokens.",
+      "Do make the selected artifact and its next decision dominant.",
+      "Do show unknown, disconnected, external, and waiting states explicitly.",
+      "Do keep service output and agent execution events identifiable.",
+      "Do distinguish installed skill context, configured profiles, and live executions.",
+      "Do keep the portrait independent of operational state and preserve the separate factual caption.",
+      "Do use the v3 raster drawings for frontal breathing and hair motion with rare one-sided leans after long rests, and one shared avatar-and-globe motion control.",
+      "Do stop hidden/offscreen work, honor reduced motion, and reset interrupted portrait playback to neutral plus a full frontal rest."
+    ],
+    "donts": [
+      "Don't use the decorative red iris as an error signal or animate the portrait in response to work, talking, or listening.",
+      "Don't use invented numbers, progress, agents, integrations, or terminal streams.",
+      "Don't reintroduce a sidebar, gloss, neon glow, a separate graphic illustration logo, or unrelated dashboard features; retain the MARI/PERSONAL AI text.",
+      "Don't restore the rejected six-frame eye-only loop, CSS bobbing, or crossfades between drawings.",
+      "Don't promote historical screenshots or the superseded pure-black palette over the latest user direction."
+    ]
+  }
+}
