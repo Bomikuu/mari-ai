@@ -1,0 +1,27 @@
+# Agent teams documentation review
+
+Reviewed 2026-11-07 as the fresh Impeccable documenter for the ordinary team extension. The user’s automatic delegation scope, code-first workflow, matte light/midnight themes and existing chibi artwork were already settled. This pass reconciles documentation with final source and saved evidence; it does not replace the visual finish review.
+
+## Disposition: documented
+
+`PRODUCT.md`, `README.md` and both agent surface briefs now consistently describe one leased worker with up to three independent agent turns, same-profile/conversation serialization and exclusive non-agent AI workflows. The older one-active-AI-job descriptions were material drift from the dispatcher and have been corrected. Direct conversations retain their captured instructions; each delegated goal separately captures the current coordinator and eligible specialist roster. The goal remains in its fixed personal/project scope and grants no new authority.
+
+The descriptions cover a validated native plan for 1–6 independent specialists, visible Team assignments, inspection and return to the parent goal, scoped cancellation, explicit retry preserving completed results, interruption without automatic replay, and native CEO synthesis saved in Chat. The roster records the requested row-major order, separate roles, unique names, reversible archive and the stable `ronan` portrait ID displayed as Rohan. Legacy migration preserves saved instructions and customized roles.
+
+`DESIGN.md` now keeps the roster grid in Layout and the Team interaction pattern in Components, rather than leaving those additions after Do’s and Don’ts. It records the existing four/three/two/one-column responsive rules, conditional Team tab, expandable long instructions and worker-confirmed capacity. All frontmatter tokens and `.impeccable/design.json` remain byte-identical to the start of this pass. No application source, tests, graph artifacts, private `.mari` state or rasters were changed by this documenter. No unrelated design drift was repaired.
+
+## Source and evidence checked
+
+- `server/agent-teams.js`, `server/agent-profiles.js` and `shared/agent-catalog.js`: captured scope/roster, plan validation, lifecycle and retry behavior, authoritative team reload inside transactions, migration preservation, names, roles and portrait order.
+- `worker/index.js`, `worker/agent-chat.js` and `worker/codex.js`: shipped concurrency default, profile/chat locks, exclusive workflows, lease interruption, owned workspaces, restricted native runtime, structured planning, saved-result synthesis and reapplication of developer instructions on resume.
+- `AgentTeamPanel`, `AgentChatWorkspace`, `AgentRoster`, `ResourcesManager`, `agent-chat.css` and `resources-manager.css`: actual controls, conditional tabs, status sources, inspection links, full-instruction disclosures, editor settings and responsive grid/layout. This was source inspection, not a new browser or accessibility test.
+- The specification and implementation plan, final finish review, verification document, 11-test focused output, 181-test full-suite output and successful production-build output. Both backend review findings are resolved in source and covered by the recorded passing regressions. The existing Three.js chunk-size warning remains.
+- `output/agent-teams-native-trial.json`: a completed native ChatGPT-authenticated planning → two-specialist work → synthesis run. Lire and Arme’s recorded execution intervals overlap for about 24.6 seconds, with saved response/file artifacts. This proves the recorded two-specialist personal-scope vertical slice, not a six-specialist run or arbitrary project goals.
+- Firefox `checks.json` and its interaction script: ten 1440px/390px light/dark captures, matching viewport/document widths, no recorded JavaScript errors, real artifact download and the inspection flow. Cancel/retry and concurrent-visibility interactions use labelled synthetic executor fixtures; those records are deleted before captures, which display copied completed native trial data. These captures do not prove live native concurrency. The independent finish reviewer visually inspected all ten images; this documentation pass did not reopen them or rerun Firefox.
+- JEV’s **scoped** result is an authorized model classification of a sanitized workflow description, not execution or visual proof. Graphify extraction/render is confirmed by its logs and refresh validation: 101 JS/JSX source files, 809 nodes, 3,017 edges and 25 communities, matching recorded source hashes and preserved requirements artifacts. It used no external API/LLM calls and excludes CSS/rasters; it is structural evidence only.
+
+## Limits retained
+
+The installed Impeccable launcher refused execution with permission denied. This pass followed the existing project context directly and did not alter tooling permissions. The feature’s detector attempt has the same recorded limitation. No clean detector scan, automated accessibility certification, computed contrast audit, new live overlay, or independent keyboard/screen-reader verification is claimed. The existing portraits and their provenance remain unchanged.
+
+The source and artifacts were inspected without repeating native inference, browser interaction, the build or tests. The documentation edits require no new application test run. The final finish review remains the visual/correctness ship decision; historical direct-chat and roster records retain their original scopes.

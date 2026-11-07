@@ -1,0 +1,19 @@
+# Direct agent workspace
+
+Mode: Operate. The user wants to chat with individual agents, directly assign tasks and inspect actual work. They confirmed separate project and personal conversations. This extends the existing roster and event-driven local queue, retaining the code-first Mari workflow and all native-auth, source-edit approval and process ownership rules.
+
+## Direction contract
+
+THESIS: A conversation with an accountable specialist, with its actual work one tab away. No simulated staff availability, typing performance, progress percentages or thinking transcript.
+
+OWN-WORLD: The established matte light/midnight themes, Inter hierarchy and official shared controls. Recognizable Grand Chase chibi portraits give identity; neutral rules structure conversation and execution evidence. No sidebar or additional world/theme.
+
+STORY: Open a role, choose a personal/project context and saved conversation, then Chat, Assign task, or Delegate goal for a coordinator. The user approved automatic delegation within the assigned goal; the backend captures its exact scope, current coordinator and eligible specialist roster. A native structured plan selects 1–6 independent specialists without recursive delegation. The single leased worker runs up to three independent agent turns, with same-profile/chat locks and exclusive non-agent AI workflows. Team lists actual assignments and activity with inspection, scoped cancel and explicit retry, followed by native CEO synthesis saved in Chat. Completed specialist results survive retry; interruption does not replay work automatically. Long instructions expand so assignments remain prominent. Read a real response, inspect task results or commands, and cancel/retry explicitly. Website editing remains within its existing approved-image workflow.
+
+FIRST VIEWPORT: Back-to-roster control, portrait/name/role and truthful worker state; confirmed concurrency capacity or an unconfirmed-capacity caption offline; wrapping context/history selectors; Chat/Team/Tasks/Activity tabs for coordinators (Chat/Tasks/Activity for specialists). The transcript dominates above a clear composer. Team uses flat assignment rows, expandable saved results/artifact downloads and Inspect links; specialist chats link back to the parent goal. Activity exposes actual commands, output, errors and files. Mobile stacks controls and uses its own composer rather than the global command dock.
+
+CAPTURED KNOWLEDGE: Activity → Instructions, scope & files expands the last eight displayed job captures with source titles, excerpts, saved scope, complete revisions, source links and full capture/save/fetch/source-modification dates in Asia/Manila. Stale and truncated context is labeled. New turns receive bounded enabled Personal or matching Project knowledge plus explicitly Shared items; the coordinator, specialists and synthesis inherit the delegated goal's immutable snapshot, including on retry. Editing, disabling or removing an item changes future captures and cannot retract queued or already supplied text. Retrieved content stays untrusted reference data and grants no tools or permissions. The [Knowledge surface contract](knowledge-access.md) and [SHIP review](../../docs/design/knowledge-access-finish-review.md) govern this addition; their synthetic UI evidence does not establish live Drive parsing or Telegram delivery.
+
+FORM: A conversation extension inside the settled Mari world; user specified the flow and chibi reference. Preserve the roster's flat structure and profile editor. New artwork is a named, recognizable chibi interpretation of the Grand Chase cast, with provenance and no implied franchise role canon.
+
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

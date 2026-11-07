@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mari Handoff"
+  short_description: "Delegate scoped goals to Mari and follow real results"
+  default_prompt: "Use $mari-handoff to assign this goal to Mari’s team and report its actual progress."
