@@ -1,0 +1,18 @@
+# Knowledge and Telegram
+
+Mode: Operate. An ordinary extension of Mari's settled single-page matte light/midnight interface. No new world, logo, portrait, palette, sidebar or decorative motion. Use existing shared official controls and semantic tokens.
+
+THESIS: Know what each agent can reference and what the paired phone can request. Give personal/project/shared scope and source freshness the same prominence as saved content; never imply unrestricted account access.
+OWN-WORLD: Inter hierarchy, quiet dividers, flat rows and existing action/status colors. The editor is an inline companion to a readable searchable list; responsive layouts stack without hiding scope or save controls.
+STORY: Save an owner-authored note or select a Drive document, choose its scope, and control whether new work receives it. Notes default to context enabled; Drive imports require explicit opt-in. Connect a dedicated Telegram bot, open a short-lived pairing link, inspect the private user and confirm in Mari. Actual jobs, errors, full Manila cache dates and delivery uncertainty remain visible. Current pairing and notification consent gate each delivery; a revoked pending alert is cancelled, while an obsolete in-flight attempt remains uncertain.
+FIRST VIEWPORT: Back control and Knowledge heading, Local memory/Google Drive/Telegram tabs, one clear action. Notes pairs search/list with its editor; Drive offers explicit read controls and imported-text previews; Telegram presents connection, pairing and fixed-scope goal/notification settings. At 800px and below the companion columns stack. Context evidence expands in an agent's Activity view with the captured scope, excerpt, full revision, source link, capture/save/fetch/source-modification dates, and stale/truncated flags.
+FORM: Existing product extension; code-first was selected by the user. No new comp or raster assets. Long text wraps, selectors remain labeled, forms preserve non-secret drafts on failure, and token entry is never prefilled or returned.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+## Shipping evidence
+
+The [finish review](../../docs/design/knowledge-access-finish-review.md) records **SHIP** after resolving send-time consent/revocation, confirmed-pair binding identity and inspectable source age/provenance. The [verification record](../../docs/research/2026-11-07-knowledge-access-verification.md) separates ten synthetic Firefox captures and isolated route/worker/bot/model checks from one actual native memory turn and a Drive connectivity inspection. The captures include a Nov 4 cached import and Nov 3 source modification against a Nov 7 capture/check. Live Telegram remains unconfigured without the user's token and exact-private-user confirmation; selected Drive text needs a user-chosen file. No new raster ships with this extension.
+
+## Telegram conversation extension
+
+Approved November 7, 2026: normal messages use Mari and return completed answers; /goal retains the configured coordinator and returns new phone goals’ final synthesis; /image returns a validated generated photo; /new resets only the phone conversation. The Phone context field and phone-request permission cover chat/images/goals. Direct requested replies and optional status notifications are distinct. Existing pairing, secret handling and uncertain-delivery recovery remain visible. Final Firefox evidence is in output/playwright/telegram-conversation; no new palette, component system, decorative asset or motion was introduced.
