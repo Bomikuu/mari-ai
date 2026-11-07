@@ -1,0 +1,28 @@
+node_modules/
+dist/
+.mari/
+.env
+.env.*
+!.env.example
+playwright-report/
+test-results/
+*.log
+graphify-out/cache/
+graphify-out/.graphify*
+
+# Generated local review output and analysis caches
+output/
+.impeccable/review/
+graphify-out/
+
+# Local databases and credentials
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+*.pem
+*.key
+.DS_Store
+
+# Locally generated demonstrations and capture evidence
+docs/evidence/
