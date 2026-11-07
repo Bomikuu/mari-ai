@@ -1,0 +1,11 @@
+{
+  "name": "mari-workflow-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Isolated two-service demo with explicitly synthetic content for Mari workflow verification.",
+  "scripts": {
+    "dev": "node server.js",
+    "dev:api": "node api.js"
+  }
+}
