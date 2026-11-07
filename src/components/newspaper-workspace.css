@@ -1,0 +1,173 @@
+@font-face { font-family:'Mari Newspaper'; src:url('../assets/newspaper/DejaVuSerif.ttf') format('truetype'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'Mari Newspaper'; src:url('../assets/newspaper/DejaVuSerif-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+.newspaper-workspace { min-width:0; padding:4px 0 24px; }
+.newspaper-heading { display:flex; justify-content:space-between; gap:20px; align-items:flex-start; margin-bottom:22px; }
+.newspaper-heading h1 { font-size:25px; font-weight:600; letter-spacing:-.025em; line-height:1.3; }
+.newspaper-heading p { margin-top:6px; font-size:13px; color:var(--text-secondary); }
+.newspaper-controls { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+.newspaper-edition-picker { min-width:0; width:280px; max-width:100%; }
+.newspaper-edition-picker>label { display:flex; flex-direction:column; gap:7px; font-size:11px; color:var(--muted-foreground); }
+.newspaper-edition-picker select { width:100%; font-size:12px; }
+.newspaper-control-actions { display:flex; gap:8px; flex-wrap:wrap; }
+.newspaper-control-actions [data-slot="button"] { font-size:12px; }
+.newspaper-schedule { display:flex; flex-wrap:wrap; gap:7px; align-items:center; margin:15px 0; font-size:12px; color:var(--text-secondary); }
+.newspaper-schedule>svg { color:var(--primary); flex-shrink:0; }
+.newspaper-schedule>p { flex-basis:100%; font-size:11px; color:var(--muted-foreground); margin:0 0 0 22px; line-height:1.6; }
+.newspaper-error { padding:11px 13px; border:1px solid var(--error-border); border-radius:5px; background:var(--error-surface); color:var(--destructive); font-size:12px; line-height:1.7; overflow-wrap:anywhere; margin:12px 0; }
+.newspaper-notice { color:var(--warning); font-size:12px; line-height:1.7; margin:12px 0; }
+.newspaper-loading { display:flex; gap:9px; align-items:center; padding:35px 0; color:var(--muted-foreground); font-size:13px; }
+.newspaper-view-note { display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px 15px; font-size:11px; color:var(--muted-foreground); padding:18px 0 12px; }
+.newspaper-spread { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; align-items:stretch; }
+.newspaper-page { min-width:0; min-height:960px; box-sizing:border-box; background:#fff; color:#171717; padding:25px 28px 22px; display:flex; flex-direction:column; border:1px solid #bcbcbc; font-family:'Mari Newspaper',serif; }
+.newspaper-page ::selection { background:#d9e3ef; color:#171717; }
+.newspaper-page a:focus-visible { outline:2px solid #315da5; outline-offset:3px; }
+.newspaper-masthead { border-top:1px solid #171717; border-bottom:3px double #171717; padding:15px 0 13px; margin-bottom:22px; }
+.newspaper-masthead h2 { font-family:'Mari Newspaper',serif; text-align:center; font-size:clamp(35px,3.3vw,53px); font-weight:700; line-height:1.1; letter-spacing:-.035em; margin:0 0 17px; color:#171717; }
+.newspaper-page--2 .newspaper-masthead h2 { font-size:clamp(30px,2.7vw,42px); }
+.newspaper-masthead>div { display:flex; justify-content:space-between; align-items:baseline; gap:10px; font:9px/1.5 Inter,'DejaVu Sans',sans-serif; color:#333; }
+.newspaper-masthead>div>span { white-space:nowrap; font-weight:600; font-size:8px; }
+.newspaper-lead { padding-bottom:20px; margin-bottom:22px; border-bottom:1px solid #444; }
+.newspaper-lead .newspaper-story { margin:0; }
+.newspaper-lead .newspaper-story h4 { font-size:clamp(29px,2.6vw,42px); line-height:1.1; letter-spacing:-.028em; margin-bottom:14px; }
+.newspaper-lead .newspaper-story-copy { font-size:15px; line-height:1.55; max-width:68ch; }
+.newspaper-columns { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; flex:1 0 auto; align-content:start; min-height:auto; }
+.newspaper-column { min-width:0; }
+.newspaper-column+.newspaper-column { border-left:1px solid #bdbdbd; padding-left:10px; margin-left:-9px; }
+.newspaper-section { min-width:0; }
+.newspaper-section+.newspaper-section { margin-top:20px; }
+.newspaper-section>h3 { font:700 10px/1.4 Inter,'DejaVu Sans',sans-serif; text-transform:uppercase; letter-spacing:.035em; padding:0 0 12px; color:#252525; }
+.newspaper-story { margin:0 0 22px; break-inside:avoid; }
+.newspaper-story h4 { font-family:'Mari Newspaper',serif; font-size:clamp(17px,1.45vw,21px); line-height:1.18; font-weight:700; letter-spacing:-.018em; margin:0 0 9px; overflow-wrap:break-word; color:#171717; }
+.newspaper-page--2 .newspaper-story h4 { font-size:clamp(16px,1.25vw,19px); }
+.newspaper-story h4>a { color:inherit; text-decoration:none; }
+.newspaper-story h4>a:hover { text-decoration:underline; text-underline-offset:4px; }
+.newspaper-byline { font:9px/1.55 Inter,'DejaVu Sans',sans-serif; color:#454545; margin:0 0 9px; overflow-wrap:anywhere; }
+.newspaper-byline>span { margin:0 2px; }
+.newspaper-story-copy { font-family:'Mari Newspaper',serif; font-size:12.5px; line-height:1.55; margin:0 0 9px; overflow-wrap:break-word; color:#171717; }
+.newspaper-story-source { display:inline-block; font:8.5px/1.5 Inter,'DejaVu Sans',sans-serif; color:#454545; text-decoration:underline; text-underline-offset:3px; overflow-wrap:anywhere; }
+.newspaper-page--compact .newspaper-story-copy { font-size:12px; line-height:1.5; }
+.newspaper-section-empty { font-family:'Mari Newspaper',serif; font-size:12px; line-height:1.6; color:#454545; margin:0 0 20px; }
+.newspaper-edition-note { font:10px/1.6 Inter,'DejaVu Sans',sans-serif; color:#454545; margin:25px 0 17px; }
+.newspaper-page-footer { display:flex; justify-content:space-between; gap:12px; align-items:baseline; border-top:1px solid #444; padding-top:12px; margin-top:18px; font:8px/1.6 Inter,'DejaVu Sans',sans-serif; color:#454545; }
+.newspaper-page-footer>strong { white-space:nowrap; font-size:8px; color:#252525; }
+.newspaper-market { margin-top:25px; border-top:1px solid #444; padding-top:15px; }
+.newspaper-market>h3 { font:700 11px/1.5 Inter,'DejaVu Sans',sans-serif; text-transform:uppercase; letter-spacing:.035em; margin-bottom:10px; }
+.newspaper-market table { width:100%; border-collapse:collapse; font:10px/1.6 Inter,'DejaVu Sans',sans-serif; font-variant-numeric:tabular-nums; }
+.newspaper-market th,.newspaper-market td { text-align:left; padding:5px 4px 5px 0; white-space:nowrap; color:#171717; }
+.newspaper-market thead th { font-weight:400; color:#454545; font-size:8px; text-transform:uppercase; }
+.newspaper-market tbody th { font-weight:700; }
+.newspaper-market-time,.newspaper-market-note { font:8px/1.6 Inter,'DejaVu Sans',sans-serif; color:#454545; margin-top:8px; }
+.newspaper-job { padding:14px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-top:15px; font-size:12px; }
+.newspaper-job>div { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.newspaper-job>div>strong { font-size:12px; font-weight:550; }
+.newspaper-job>div>time { color:var(--muted-foreground); font-size:10px; }
+.newspaper-job>p { color:var(--text-secondary); font-size:12px; line-height:1.7; margin-top:8px; }
+.newspaper-job details { margin-top:10px; }
+.newspaper-job summary { display:flex; align-items:center; gap:7px; color:var(--muted-foreground); cursor:pointer; font-size:11px; }
+.newspaper-job dl { margin:12px 0; }
+.newspaper-job dl>div { display:flex; gap:15px; font-size:11px; margin-top:6px; overflow-wrap:anywhere; }
+.newspaper-job dt { color:var(--muted-foreground); flex:0 0 70px; }
+.newspaper-job dd { min-width:0; }
+.newspaper-job ol { list-style:none; margin:12px 0 0; padding:10px 12px; max-height:280px; overflow:auto; background:var(--log-surface); border:1px solid var(--border); border-radius:5px; }
+.newspaper-job li { display:grid; grid-template-columns:72px minmax(0,1fr); gap:10px; font-size:11px; padding:5px 0; line-height:1.65; overflow-wrap:anywhere; }
+.newspaper-job li time { color:var(--muted-foreground); font-size:10px; }
+.newspaper-empty { padding:52px 32px; margin-top:20px; border:1px solid var(--panel-border); border-radius:7px; background:var(--panel); max-width:850px; }
+.newspaper-empty>svg { color:var(--primary); margin-bottom:20px; }
+.newspaper-empty h2 { font-family:'Mari Newspaper',serif; font-weight:700; font-size:30px; line-height:1.3; max-width:26ch; }
+.newspaper-empty p { color:var(--text-secondary); font-size:13px; line-height:1.8; max-width:64ch; margin-top:16px; }
+.newspaper-source-details { margin-top:22px; border:1px solid var(--border); border-radius:5px; padding:13px 15px; }
+.newspaper-source-details summary { font-size:12px; color:var(--text-secondary); cursor:pointer; }
+.newspaper-source-details>p { font-size:12px; color:var(--muted-foreground); line-height:1.75; margin-top:14px; max-width:78ch; }
+.newspaper-source-details ul { list-style:none; margin:12px 0 0; padding:0; }
+.newspaper-source-details li { padding:11px 0; border-top:1px solid var(--border); }
+.newspaper-source-details li>div { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; font-size:12px; }
+.newspaper-source-details small,.newspaper-source-details li>p { display:block; color:var(--muted-foreground); font-size:11px; line-height:1.7; margin-top:6px; overflow-wrap:anywhere; }
+@media(max-width:1150px) {
+  .newspaper-spread { grid-template-columns:minmax(0,1fr); max-width:800px; margin:0 auto; gap:25px; }
+  .newspaper-page { min-height:1020px; }
+  .newspaper-masthead h2 { font-size:52px; }
+  .newspaper-page--2 .newspaper-masthead h2 { font-size:40px; }
+  .newspaper-story h4 { font-size:22px; }
+  .newspaper-lead .newspaper-story h4 { font-size:38px; }
+  .newspaper-story-copy { font-size:14px; }
+}
+@media(max-width:560px) {
+  .newspaper-heading { gap:12px; margin-bottom:19px; }
+  .newspaper-heading h1 { font-size:22px; }
+  .newspaper-heading p { font-size:12px; }
+  .newspaper-controls { align-items:stretch; }
+  .newspaper-edition-picker { width:100%; }
+  .newspaper-control-actions { gap:7px; }
+  .newspaper-control-actions [data-slot="button"] { font-size:11px; padding-left:9px; padding-right:9px; }
+  .newspaper-schedule>p { margin-left:0; }
+  .newspaper-spread { gap:20px; }
+  .newspaper-page { padding:20px 20px 19px; min-height:0; }
+  .newspaper-masthead { margin-bottom:22px; padding:12px 0; }
+  .newspaper-masthead h2 { font-size:35px; margin-bottom:14px; }
+  .newspaper-page--2 .newspaper-masthead h2 { font-size:30px; }
+  .newspaper-masthead>div { flex-wrap:wrap; gap:3px 10px; font-size:9px; }
+  .newspaper-masthead>div>span { font-size:8px; }
+  .newspaper-columns { display:block; }
+  .newspaper-column:empty { display:none; }
+  .newspaper-column+.newspaper-column { border-left:0; border-top:1px solid #777; padding:22px 0 0; margin:22px 0 0; }
+  .newspaper-section>h3 { font-size:11px; padding-bottom:15px; }
+  .newspaper-story h4,.newspaper-page--2 .newspaper-story h4 { font-size:24px; line-height:1.25; }
+  .newspaper-lead .newspaper-story h4 { font-size:31px; line-height:1.14; }
+  .newspaper-byline { font-size:10px; margin-bottom:12px; }
+  .newspaper-story-copy,.newspaper-page--compact .newspaper-story-copy,.newspaper-lead .newspaper-story-copy { font-size:14px; line-height:1.75; }
+  .newspaper-story-source { font-size:10px; }
+  .newspaper-market { margin-top:18px; }
+  .newspaper-market table { font-size:8.5px; }
+  .newspaper-market thead th { font-size:7px; }
+  .newspaper-market th,.newspaper-market td { padding-right:4px; }
+  .newspaper-page-footer { flex-wrap:wrap; }
+  .newspaper-empty { padding:32px 22px; }
+  .newspaper-empty h2 { font-size:26px; }
+}
+@page { size:A4; margin:0; }
+@media print {
+  body.print-newspaper { margin:0!important; padding:0!important; background:#fff!important; color:#171717!important; }
+  body.print-newspaper .command-center> :not(.main-workspace),body.print-newspaper .main-workspace> :not(.newspaper-workspace),body.print-newspaper .newspaper-workspace> :not(.newspaper-spread) { display:none!important; }
+  body.print-newspaper .command-center,body.print-newspaper .main-workspace,body.print-newspaper .newspaper-workspace,body.print-newspaper .newspaper-spread { display:block!important; width:100%!important; max-width:none!important; margin:0!important; padding:0!important; min-height:0!important; }
+  body.print-newspaper .newspaper-page { display:flex; box-sizing:border-box; flex-direction:column; width:210mm; height:297mm; min-height:0; margin:0; padding:9mm 11.3mm 8mm; border:0; border-radius:0; background:#fff!important; color:#171717!important; break-after:page; page-break-after:always; print-color-adjust:exact; }
+  body.print-newspaper .newspaper-page:last-child { break-after:auto; page-break-after:auto; }
+  body.print-newspaper .newspaper-masthead { padding:3mm 0; margin-bottom:5mm; border-top:.5pt solid #171717; border-bottom:2pt double #171717; }
+  body.print-newspaper .newspaper-masthead h2 { font-size:40pt; line-height:1.1; margin:0 0 4mm; }
+  body.print-newspaper .newspaper-page--2 .newspaper-masthead h2 { font-size:31pt; }
+  body.print-newspaper .newspaper-masthead>div { display:flex; flex-wrap:nowrap; font-size:7.5pt; line-height:1.4; }
+  body.print-newspaper .newspaper-masthead>div>span { font-size:7.5pt; }
+  body.print-newspaper .newspaper-lead { padding-bottom:4mm; margin-bottom:5mm; border-bottom:.65pt solid #444; }
+  body.print-newspaper .newspaper-lead .newspaper-story { margin:0; }
+  body.print-newspaper .newspaper-lead .newspaper-story h4 { font-size:29pt; line-height:1.1; margin:0 0 3mm; }
+  body.print-newspaper .newspaper-lead .newspaper-story-copy { font-size:11.5pt; line-height:1.35; max-width:68ch; }
+  body.print-newspaper .newspaper-columns { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5.6mm; align-content:start; flex:1; min-height:0; }
+  body.print-newspaper .newspaper-column:empty { display:block; }
+  body.print-newspaper .newspaper-column+.newspaper-column { border-top:0; border-left:.35pt solid #aaa; padding:0 0 0 2.8mm; margin:0 0 0 -2.8mm; }
+  body.print-newspaper .newspaper-section+.newspaper-section { border-top:0; padding:0; margin-top:3mm; }
+  body.print-newspaper .newspaper-section>h3 { font-size:8.5pt; padding-bottom:3mm; line-height:1.25; }
+  body.print-newspaper .newspaper-story { margin-bottom:4mm; break-inside:avoid; }
+  body.print-newspaper .newspaper-story h4 { font-size:16pt; line-height:1.13; margin-bottom:2mm; }
+  body.print-newspaper .newspaper-page--2 .newspaper-story h4 { font-size:14pt; }
+  body.print-newspaper .newspaper-byline { font-size:7pt; line-height:1.3; margin-bottom:1.8mm; }
+  body.print-newspaper .newspaper-story-copy { font-size:9.5pt; line-height:1.25; margin-bottom:1.8mm; }
+  body.print-newspaper .newspaper-story-source { font-size:7pt; line-height:1.3; }
+  body.print-newspaper .newspaper-page--compact .newspaper-story h4 { font-size:14pt; }
+  body.print-newspaper .newspaper-page--2.newspaper-page--compact .newspaper-story h4 { font-size:12.5pt; }
+  body.print-newspaper .newspaper-page--compact .newspaper-byline { font-size:6.8pt; line-height:1.2; margin-bottom:1.2mm; }
+  body.print-newspaper .newspaper-page--compact .newspaper-story-copy { font-size:9.5pt; line-height:1.12; margin-bottom:1.4mm; }
+  body.print-newspaper .newspaper-page--compact .newspaper-story { margin-bottom:2.8mm; }
+  body.print-newspaper .newspaper-page--compact .newspaper-section>h3 { padding-bottom:2mm; }
+  body.print-newspaper .newspaper-page--compact .newspaper-lead .newspaper-story h4 { font-size:27pt; }
+  body.print-newspaper .newspaper-page--compact .newspaper-lead .newspaper-story-copy { font-size:11.5pt; line-height:1.3; }
+  body.print-newspaper .newspaper-section-empty { font-size:9.5pt; line-height:1.4; margin-bottom:4mm; }
+  body.print-newspaper .newspaper-market { padding-top:3mm; margin-top:3mm; }
+  body.print-newspaper .newspaper-market h3 { font-size:8.5pt; margin-bottom:2mm; }
+  body.print-newspaper .newspaper-market table { font-size:8.5pt; line-height:1.3; }
+  body.print-newspaper .newspaper-market th,body.print-newspaper .newspaper-market td { padding:1.3mm 2mm 1.3mm 0; }
+  body.print-newspaper .newspaper-market thead th { font-size:7pt; }
+  body.print-newspaper .newspaper-market-time,body.print-newspaper .newspaper-market-note { font-size:7pt; line-height:1.3; margin-top:1.8mm; }
+  body.print-newspaper .newspaper-edition-note { font-size:7.8pt; line-height:1.4; margin:4mm 0 2mm; }
+  body.print-newspaper .newspaper-page-footer { margin-top:3mm; padding-top:2.5mm; font-size:7pt; line-height:1.3; flex-wrap:nowrap; }
+  body.print-newspaper .newspaper-page-footer>strong { font-size:7pt; }
+  body.print-newspaper a { color:#171717!important; text-decoration:none; }
+}

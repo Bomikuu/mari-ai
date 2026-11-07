@@ -1,0 +1,32 @@
+# Mari Daily independent code review — 7 November 2026
+
+Review scope: the accepted daily-newspaper specification and source research; fixed source adapters; summary and market validation; newspaper HTTP routes; worker dispatch, durable publication and cancellation; scheduled CLI worker ownership; shared layout and PDF rendering; existing owner authentication and artifact-path protection. Application code was inspected read-only. The reviewer added only the requested CLI ownership regressions and this review record.
+
+## Findings and resolution
+
+1. **Fixed: generation used the edition-day string as the source cutoff instant.** `YYYY-MM-DD` parses as UTC midnight, which is 08:00 Manila. At the requested 07:00 generation time this made genuinely current prices appear an hour old and invalidated the optional market panel. An isolated collector fixture with all three provider observations at `2026-11-06T22:59:00Z` returned unavailable for input `2026-11-07` and ready for the actual generation instant `2026-11-06T23:00:00Z`. The worker now supplies the actual ISO generation instant. A dedicated 07:00 regression passes.
+
+2. **Fixed: temporary-worker shutdown could cancel an unrelated queued workflow.** A real-worker isolated reproduction queued another workflow immediately after the newspaper completed. It started during the CLI polling delay and was then aborted by the CLI's temporary-worker shutdown, leaving an unrelated job cancelled despite successful newspaper generation. The CLI now gives its temporary worker an explicit newspaper-only job-type filter, applied before claim or cancellation processing. Regression coverage verifies that earlier and later unrelated workflows, an unrelated pending cancellation, and a queued service action remain untouched. Shutdown explicitly uses `stopServices: false` and releases only the owned worker lease.
+
+3. **Fixed: an existing queued newspaper without an online worker could never progress.** Initial queue deduplication returned the old queued job before checking worker availability; the CLI therefore skipped temporary-worker creation and eventually timed out. The CLI now also checks worker availability for a selected pending job. A real-worker regression verifies that the exact existing job finishes, no duplicate is created, and the temporary worker is stopped without stopping services.
+
+4. **Fixed: unknown optional daily change discarded valid prices.** The source adapter deliberately preserves an absent CoinGecko daily change as `null`, and presentation renders that as unavailable. The worker originally rejected that value and discarded otherwise fresh prices for all assets. It now accepts `null` while rejecting invalid numeric values and preserves the prices. The regression verifies that unknown change never becomes zero.
+
+5. **Fixed: the numeric guard rejected the Dota 2 publisher name.** A source title without the digit `2` could cause a faithful summary naming its publisher, `Dota 2 / Valve`, to fail validation. The supported numeric-token set now includes the host-attached source name. A dedicated regression passes.
+
+6. **Fixed: the unavailable-market message crossed the PDF panel divider.** It originally started at y=638 and measured through y=651.99, crossing the divider at y=641 and appearing before its heading at y=653. The presentation owner moved the message to y=691. A new layout assertion requires it to follow the market heading by at least ten points. All three PDF tests pass after this correction.
+
+No unresolved material correctness or security finding remains in the reviewed code. Final browser/visual verification and real automation registration are independent finish steps owned by the root agent.
+
+## Verified boundaries
+
+- Fetch destinations are fixed server-side HTTPS URLs. The collector does not fetch article URLs, follow redirects, forward credentials, execute publisher HTML, or expose a general URL proxy. Body size, MIME, source deadline and overall deadline are bounded. XML DTD/entity declarations are rejected; text is normalized before model input.
+- Stories retain host-owned source identity, URL, date and old-update labels. Model output cannot replace those fields, add links or markup, exceed section/text budgets, omit an available section, or introduce unsupported numeric tokens. The native summarizer receives the existing restricted execution profile with no additional read roots. Existing installed-profile tests prove neighboring-file and external-network denial.
+- HTTP and CLI queue creation share a synchronous immediate SQLite transaction. Saved editions can be reused offline, active newspaper jobs are deduplicated, and cancellation is scoped to newspaper jobs. Publication rechecks durable cancellation within the edition/artifact transaction; cancelled rendering and failed refresh tests retain the prior archive and create no published artifact.
+- The newspaper router and PDF artifact route sit behind the existing owner-session middleware. State mutations require the owner CSRF token. Public artifact records omit local paths. Artifact delivery validates canonical containment and rejects symlinks and traversal; generated PDF directories and files use private permissions.
+- PDF generation measures text, fails on overflow, embeds local fonts, requires exactly two A4 pages, and writes output exclusively. Poppler tests verify two pages, A4 dimensions, extraction of every complete story body and body sizes of at least 9.5pt across ordinary, long and missing-data fixtures.
+- The schedule API reports pending until a registered automation ID is persisted. Creating the actual supported Codex automation and the final bounded Firefox/UI inspection remain root-agent finish work; this review did not assert those external steps were complete.
+
+## Verification record
+
+`node --test tests/newspaper*.test.js tests/api.test.js tests/security.test.js tests/codex-isolation.test.js` passed **57 tests**, zero failures, after the backend and CLI fixes above. Following the final PDF correction, `node --test tests/newspaper-pdf.test.js` again passed all **3 tests**, including the new panel-order assertion. The two reviewer-added tests live in `tests/newspaper-cli-ownership.test.js` and use the real worker in temporary private stores with synthetic workflows; they perform no publisher requests or native model inference. Isolated reproductions were cleaned up. No browser, running user service, production runtime database or real saved edition was modified by this reviewer.
