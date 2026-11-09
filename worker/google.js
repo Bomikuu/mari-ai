@@ -61,7 +61,12 @@ function mailUrl(value, sourceId) {
   return `https://mail.google.com/mail/u/0/#inbox/${encodeURIComponent(sourceId)}`;
 }
 
-export function normalizeGoogleMail(data, labelsData) {
+function calendarInvitation(message,headers) {
+  const part=(node,depth=0)=>depth<8&&!!node&&(/text\/calendar/i.test(node.mimeType||node.mime_type||'')||/\.(?:ics|ical|vcs)$/i.test(node.filename||'')||(node.parts||node.children||[]).some(c=>part(c,depth+1)));
+  return part(message.payload||message)||!!headers['x-google-calendar-id']||/^(?:invitation|updated invitation|canceled event|cancelled event|accepted|declined|tentative):/i.test(message.subject||headers.subject||'')||(message.attachments||[]).some(a=>/\.(?:ics|ical|vcs)$/i.test(a.filename||a.name||''));
+}
+
+export function normalizeGoogleMail(data, labelsData, {filtered=false}={}) {
   const found = findList(data, ['emails', 'messages', 'items', 'results']);
   if (!found) throw new Error('Google returned an unsupported email list.');
   const labels = findList(labelsData, ['labels', 'items', 'results']);
@@ -74,9 +79,12 @@ export function normalizeGoogleMail(data, labelsData) {
     if (!id) throw new Error('An email did not include its source ID.');
     const sender = message.from || message.from_ || message.sender || headers.from;
     const from = typeof sender === 'object' ? [sender.name, sender.email || sender.address].filter(Boolean).join(' ') : sender;
-    return { id, subject: clean(message.subject || headers.subject || '(No subject)', 300), from: clean(from, 200), snippet: clean(message.snippet || message.preview || mimePreview(message.payload || message), 300), receivedAt: isoTime(message.internalDate || message.email_ts || message.received_at || message.receivedAt || message.date || headers.date), url: mailUrl(message.display_url || message.url, clean(message.threadId || message.thread_id || id, 256)) };
+    const bracket=String(from||'').match(/<([^<>]+)>/g)?.at(-1);
+    const rawAddress=typeof sender==='object'?(sender.email||sender.address||''):bracket?bracket.slice(1,-1):String(from||'').match(/[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9.-]+\.[a-z]{2,}/gi)?.at(-1);
+    const senderAddress=String(rawAddress||'').trim().toLowerCase();
+    return { id, senderAddress, calendarInvite:calendarInvitation(message,headers), subject: clean(message.subject || headers.subject || '(No subject)', 300), from: clean(from, 200), snippet: clean(message.snippet || message.preview || mimePreview(message.payload || message), 300), receivedAt: isoTime(message.internalDate || message.email_ts || message.received_at || message.receivedAt || message.date || headers.date), url: mailUrl(message.display_url || message.url, clean(message.threadId || message.thread_id || id, 256)) };
   });
-  return { status: 'ready', items, unreadCount, truncated: Boolean(found.parent.nextPageToken || found.parent.next_page_token || found.items.length > 20 || unreadCount !== null && unreadCount > items.length) };
+  return { status: 'ready', items, unreadCount, truncated: Boolean(found.parent.nextPageToken || found.parent.next_page_token || found.items.length > 20 || !filtered&&unreadCount !== null && unreadCount > items.length) };
 }
 
 function eventUrl(value, id) {
@@ -119,13 +127,14 @@ function cachedFailure(previous, provider, empty) {
   };
 }
 
-export async function runGoogleBrief({ store, dataDir, job, signal, makeCodex = (options) => new CodexClient(options) }) {
+export async function runGoogleBrief({ store, dataDir, job, signal, makeCodex = (options) => new CodexClient(options), briefKey = 'google-brief', mailQuery = 'in:inbox is:unread -in:spam -in:trash', includeMail = true, includeCalendar = true, onActivity }) {
   if (signal?.aborted) throw cancellation();
   const inspecting = job.type === 'personal.google.inspect';
   const date = googleDate(job.payload?.date, job.payload?.timeZone || GOOGLE_TIME_ZONE);
-  const cached = store.get('settings', 'google-brief');
+  const cached = store.get('settings', briefKey);
   if (!inspecting && cached) store.put('settings', { ...cached, stale: true, refreshing: true, lastAttemptAt: now() });
   const activity = (action, tool = null) => {
+    if (onActivity) return onActivity(action, tool);
     if (job.agentId) store.update('agents', job.agentId, { name: 'Google reader', role: 'personal summaries', status: 'working', phase: 'google-brief', action, currentCommand: tool, lastActivityAt: now() });
   };
   const event = (type, message, data = {}) => store.event({ source: 'agent', agentId: job.agentId, type, message, data });
@@ -177,15 +186,17 @@ export async function runGoogleBrief({ store, dataDir, job, signal, makeCodex = 
       };
       const previous = cached?.brief;
       let mail, calendar;
-      if (connections.gmail.callable) {
+      if (!includeMail) mail = {status:'disabled',items:[],unreadCount:null,truncated:false};
+      else if (connections.gmail.callable) {
         try {
-          const data = await call('gmail.search_emails', { query: 'in:inbox is:unread -in:spam -in:trash', max_results: 20 });
+          const data = await call('gmail.search_emails', { query: mailQuery, max_results: 20 });
           let labels = null;
           try { labels = await call('gmail.list_labels', { label_names: ['INBOX'] }); } catch (error) { ensureActive(); }
-          mail = normalizeGoogleMail(data, labels);
+          mail = normalizeGoogleMail(data, labels, {filtered:briefKey!=='google-brief'});
         } catch (error) { ensureActive(); mail = cachedFailure(previous, 'mail', { items: [], unreadCount: null, truncated: false }); }
       } else mail = { items: [], unreadCount: null, truncated: false, status: 'unavailable', error: 'Connect Gmail in Codex to read your inbox.' };
-      if (connections.calendar.callable) {
+      if (!includeCalendar) calendar = {status:'disabled',events:[],truncated:false};
+      else if (connections.calendar.callable) {
         try {
           const nextDate = new Date(Date.parse(`${date}T00:00:00Z`) + 86400000).toISOString().slice(0, 10);
           const data = await call('google_calendar.search_events', { time_min: `${date}T00:00:00+08:00`, time_max: `${nextDate}T00:00:00+08:00`, timezone_str: GOOGLE_TIME_ZONE, max_results: 30, calendar_id: 'primary' });
@@ -195,7 +206,7 @@ export async function runGoogleBrief({ store, dataDir, job, signal, makeCodex = 
       if (mail.status !== 'ready' && calendar.status !== 'ready') throw new Error(SAFE_ERROR);
       ensureActive();
       const brief = { generatedAt: now(), date, timeZone: GOOGLE_TIME_ZONE, summary: summaryFor(mail, calendar), mail, calendar, stale: mail.status !== 'ready' || calendar.status !== 'ready' };
-      store.put('settings', { id: 'google-brief', brief, stale: brief.stale, refreshing: false, lastAttemptAt: now(), error: null });
+      store.put('settings', { id: briefKey, brief, stale: brief.stale, refreshing: false, lastAttemptAt: now(), error: null });
       activity('Google summary is ready.');
       event('google.brief.ready', 'Refreshed the Google summary.', { mailItems: mail.status === 'ready' ? mail.items.length : null, calendarItems: calendar.status === 'ready' ? calendar.events.length : null });
       return { connections, brief };
@@ -206,7 +217,7 @@ export async function runGoogleBrief({ store, dataDir, job, signal, makeCodex = 
     const message = cancelled ? 'Google refresh cancelled.' : SAFE_ERROR;
     const checked = now();
     if (!connections) store.put('settings', { id: 'google-connections', connections: { gmail: { status: 'error', callable: false, lastCheckedAt: checked }, calendar: { status: 'error', callable: false, lastCheckedAt: checked } }, error: message });
-    if (!inspecting) store.put('settings', { ...(cached || { id: 'google-brief', brief: null }), id: 'google-brief', stale: true, refreshing: false, error: message, lastAttemptAt: checked });
+    if (!inspecting) store.put('settings', { ...(cached || { id: briefKey, brief: null }), id: briefKey, stale: true, refreshing: false, error: message, lastAttemptAt: checked });
     if (cancelled) throw cancellation();
     throw new Error(message);
   } finally {

@@ -18,6 +18,7 @@ import { runNewspaper } from './newspaper.js';
 import { runDriveRead } from './drive.js';
 import { runAgentTurn } from './agent-chat.js';
 import { runTelegramImage } from './telegram-image.js';
+import { runPersonalAnalysis } from './personal-analysis.js';
 
 const execute = promisify(execFile);
 const digest = async (filename) => createHash('sha256').update(await readFile(filename)).digest('hex');
@@ -283,6 +284,7 @@ export function createWorkflow({ store, dataDir, workerId, updateCapabilities = 
     if (job.type?.startsWith('knowledge.drive.')) return runDriveRead({ store, dataDir, job, signal, makeCodex });
     if (job.type === 'agent.turn' || job.type?.startsWith('agent.team.')) return runAgentTurn({ store, dataDir, job, signal, makeCodex });
     if (job.type === 'personal.newspaper.generate') return runNewspaper({ store, dataDir, job, signal, makeCodex });
+    if (['personal.crypto.analyze','personal.x.summarize'].includes(job.type)) return runPersonalAnalysis({ store, dataDir, job, signal, makeCodex });
     if (job.type === 'project.brag.generate') return runBrag({ store, dataDir, job, signal, makeCodex });
     const task = job.taskId ? store.get('tasks', job.taskId) : null;
     if (job.taskId && !task) throw new Error('Task not found.');

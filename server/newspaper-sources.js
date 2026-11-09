@@ -67,6 +67,7 @@ function canonicalArticleUrl(value, sourceId) {
     || (host === 'www.dota2.com' && /^\/(?:newsentry\/\d+|news\/[a-z0-9/_-]+)\/?$/i.test(path));
   if (sourceId === 'ethereum-foundation') allowed = host === 'blog.ethereum.org' && /^\/(?:en\/)?\d{4}\/\d{2}\/\d{2}\/[a-z0-9/_-]+\/?$/i.test(path);
   if (sourceId === 'bitcoin-core') allowed = host === 'bitcoincore.org' && /^\/en\/\d{4}\/\d{2}\/\d{2}\/[a-z0-9/._-]+\/?$/i.test(path);
+  if (sourceId === 'x-cached') allowed = host === 'x.com' && /^\/[a-z0-9_]{1,15}\/status\/\d{1,25}$/.test(path);
   if (!allowed) return null;
   url.hash = '';
   url.search = '';

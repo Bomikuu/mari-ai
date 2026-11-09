@@ -57,7 +57,7 @@ export async function inspectCodex() {
 }
 
 export class CodexClient extends EventEmitter {
-  constructor({ store, projectId, taskId, chatId, agentId, onActivity = () => {}, executionPolicy = null }) {
+  constructor({ store, projectId, taskId, chatId, agentId, onActivity = () => {}, executionPolicy = null, model = null, reasoningEffort = null }) {
     super();
     this.store = store;
     this.projectId = projectId;
@@ -66,6 +66,10 @@ export class CodexClient extends EventEmitter {
     this.agentId = agentId;
     this.onActivity = onActivity;
     this.executionPolicy = executionPolicy;
+    if (model !== null && !/^[a-zA-Z0-9._:-]{1,100}$/.test(model)) throw new Error('Invalid per-job model.');
+    if (reasoningEffort !== null && !['none','minimal','low','medium','high','xhigh','max','ultra'].includes(reasoningEffort)) throw new Error('Invalid per-job reasoning effort.');
+    this.model = model;
+    this.reasoningEffort = reasoningEffort;
     this.pending = new Map();
     this.incoming = new Map();
     this.output = new Map();
@@ -91,6 +95,8 @@ export class CodexClient extends EventEmitter {
 
   async connect() {
     const isolated = this.executionPolicy ? await restrictedCodexArguments(this.executionPolicy) : [];
+    if (this.model) isolated.push('-c', `model=${JSON.stringify(this.model)}`);
+    if (this.reasoningEffort) isolated.push('-c', `model_reasoning_effort=${JSON.stringify(this.reasoningEffort)}`);
     this.child = spawn('codex', ['app-server', '--listen', 'stdio://', '-c', 'forced_login_method="chatgpt"', '-c', 'model_provider="openai"', '-c', `approval_policy="${this.executionPolicy ? 'never' : 'on-request'}"`, '-c', 'approvals_reviewer="user"', ...isolated], { env: safeChildEnv(), stdio: ['pipe', 'pipe', 'pipe'] });
     this.child.stdout.setEncoding('utf8');
     this.child.stderr.setEncoding('utf8');
@@ -148,7 +154,8 @@ export class CodexClient extends EventEmitter {
       return;
     }
     const { method, params = {} } = message;
-    if (!method || /reasoning|tokenUsage/i.test(method)) return;
+    if (!method || /reasoning/i.test(method)) return;
+    if (/tokenUsage/i.test(method)) { this.emit('notification', { method, params }); return; }
     if (method === 'item/started' || method === 'item/completed') {
       const item = params.item || {};
       if (item.type === 'reasoning') return;
@@ -260,6 +267,11 @@ export class CodexClient extends EventEmitter {
       };
       const listener = ({ method, params }) => {
         if (params.threadId && params.threadId !== threadId) return;
+        if (method === 'thread/tokenUsage/updated' && params.tokenUsage?.last) {
+          const usage = params.tokenUsage.last;
+          const keys = ['inputTokens','cachedInputTokens','outputTokens','reasoningOutputTokens','totalTokens'];
+          if (keys.every(k => Number.isSafeInteger(usage[k]) && usage[k] >= 0)) result.tokenUsage = Object.fromEntries(keys.map(k => [k,usage[k]]));
+        }
         if (method === 'turn/started') { result.turnId = params.turn?.id; if (interruptRequested || signal?.aborted) interrupt(); }
         if (method === 'item/completed') {
           const item = params.item || {};

@@ -75,7 +75,7 @@ export async function runDailyNewspaper({ dataDir = defaultNewspaperDataDir(), f
     const artifactId = edition.pdfArtifact?.id || edition.pdfArtifactId;
     const artifact = artifactId && store.get('artifacts', artifactId);
     const pdfPath = await ownedArtifactPath(dataDir, artifact);
-    return { date: edition.date, editionId: edition.id, status: edition.status, stories: edition.stories.length, pdfPath, reused: Boolean(selected.reused) };
+    return { date: edition.date, editionId: edition.id, status: edition.status, pages: edition.pages || 2, stories: edition.stories.length, pdfPath, reused: Boolean(selected.reused) };
   } catch (error) {
     if (ownJob && selected?.job && ['queued', 'running'].includes(store.get('jobs', selected.job.id)?.status)) store.update('jobs', selected.job.id, { cancelRequested: true });
     throw error;

@@ -1,0 +1,26 @@
+import {useEffect,useState} from 'react';
+import {Button} from '@/components/ui/button';
+import {Textarea} from '@/components/ui/textarea';
+import {NativeSelect} from '@/components/Primitives';
+import {BRIEFING_SECTIONS,briefingMeta} from '../../shared/newspaper-briefing.js';
+import {newspaperDate} from '../../shared/newspaper-layout.js';
+
+export function NewspaperBriefing({personal}){
+  if(!personal)return null;
+  return <section className="newspaper-personal-reading" aria-label="Your personal briefing"><header><h2>For you</h2><p>Private briefing · {newspaperDate(personal.date,{weekday:true})} · Asia/Manila</p></header>{Object.entries(BRIEFING_SECTIONS).map(([kind,title])=>{
+    const source=personal[kind];return <section key={kind} className="newspaper-personal-section"><h3>{title}</h3>{source.items.length?<ol>{source.items.map(item=><li key={item.id}><h4><a href={item.url} target="_blank" rel="noreferrer">{kind==='calendar'?item.title:kind==='mail'?item.subject:`@${item.handle}`}</a></h4><p className="newspaper-personal-meta">{briefingMeta(kind,item)}</p>{kind!=='calendar'&&<p>{item.text}{item.excerpt?' [excerpt]':''}</p>}</li>)}</ol>:<p>{source.status==='empty'?(kind==='x'?source.note:kind==='calendar'?'No events were returned for today.':'No matching emails were returned.'):source.note}</p>}{source.items.length>0&&<p className="newspaper-personal-meta">{source.note}{source.truncated?' The source result is limited; more items may exist.':''}</p>}{source.checkedAt&&<p className="newspaper-personal-meta">Checked {newspaperDate(source.checkedAt,{time:true})} Manila{source.status==='stale'?' · cached, not a live feed':''}</p>}</section>;})}</section>;
+}
+
+export function NewspaperPersonalPreferences({preferences,accounts=[],onSave,pending}){
+  const [draft,setDraft]=useState(null),[saved,setSaved]=useState(false);
+  useEffect(()=>{setDraft(preferences?{...preferences,mailSendersText:(preferences.mailSenders||[]).join(', '),mailDomainsText:(preferences.mailDomains||[]).join(', ')}:null);},[preferences?.updatedAt]);
+  if(!draft)return null;
+  const change=(key,value)=>{setSaved(false);setDraft(d=>({...d,[key]:value}));};
+  const list=value=>value.split(/[\s,;]+/).map(s=>s.trim().toLowerCase()).filter(Boolean);
+  const save=async()=>{const {includeX,includeMail,includeCalendar,refreshX,mailRule,mailQuery,mailSenders,mailDomains,excludeInvites,xHandles}=draft;await onSave({includeX,includeMail,includeCalendar,refreshX,mailRule,mailQuery,mailSenders:list(draft.mailSendersText),mailDomains:list(draft.mailDomainsText),excludeInvites,xHandles});setSaved(true);};
+  return <details className="newspaper-source-details newspaper-personal-settings"><summary>Personal sources and email rules</summary><p>These choices apply to new editions. Email searches use your Inbox; adjust the date window in the saved rule. Personal data stays in your private saved edition and PDF. Print and download include the personal briefing.</p><div className="newspaper-personal-options">{[['includeCalendar','Today’s Google Calendar'],['includeMail','Selected email previews'],['includeX','Selected X accounts']].map(([key,label])=><label key={key}><input type="checkbox" checked={draft[key]} onChange={e=>change(key,e.target.checked)}/>{label}</label>)}</div>
+    {draft.includeMail&&<div className="newspaper-personal-rule"><label>Email selection<NativeSelect label="Newspaper email selection rule" value={draft.mailRule} onChange={e=>change('mailRule',e.target.value)}><option value="custom">Custom senders and rules</option><option value="priority">Unread Important or Starred</option><option value="unread">Unread inbox, excluding promotions and social</option></NativeSelect></label>{draft.mailRule==='custom'&&<><label>Sender addresses<Textarea rows={2} value={draft.mailSendersText} onChange={e=>change('mailSendersText',e.target.value)} placeholder="person@example.com, another@example.com"/></label><label>Sender domains<Textarea rows={2} value={draft.mailDomainsText} onChange={e=>change('mailDomainsText',e.target.value)} placeholder="example.com"/></label><label>Additional Gmail search rule<Textarea rows={2} value={draft.mailQuery} onChange={e=>change('mailQuery',e.target.value)} placeholder="newer_than:2d"/></label></>}<label className="newspaper-personal-check"><input type="checkbox" checked={draft.excludeInvites} onChange={e=>change('excludeInvites',e.target.checked)}/>Exclude calendar-invitation emails</label></div>}
+    {draft.includeX&&<div className="newspaper-personal-rule"><p>Enabled X sources: {accounts.filter(a=>a.enabled).map(a=>`@${a.handle}`).join(', ')||'None yet. Add accounts in X news.'}</p><label className="newspaper-personal-check"><input type="checkbox" checked={draft.refreshX} onChange={e=>change('refreshX',e.target.checked)}/>Refresh X when preparing the paper</label><p>{draft.refreshX?'Uses the official API only after X access, paid-read consent and budget controls are configured in X news.':'Uses recent cached posts. Refresh your feed in X news before preparing the paper.'}</p></div>}
+    <div className="newspaper-personal-save"><Button size="sm" disabled={pending} onClick={()=>save().catch(()=>setSaved(false))}>Save personal sources</Button>{saved&&<span role="status">Saved for the next edition.</span>}</div>
+  </details>;
+}

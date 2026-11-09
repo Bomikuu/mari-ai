@@ -23,6 +23,10 @@ import { createGithubRouter } from './github.js';
 import { createVoiceRouter } from './voice.js';
 import { createBragRouter } from './brag.js';
 import { createNewspaperRouter } from './newspaper.js';
+import { createMarketsRouter } from './markets.js';
+import { createMarketData } from './market-data.js';
+import { createXNewsRouter } from './x-news.js';
+import { createPersonalAnalysisRouter } from './personal-analysis.js';
 import { inventoryRoutes,normalizeRoute } from './routes.js';
 import { MAX_IMAGE_BYTES,publicArtifact,ownedArtifactPath,artifactHash,importProposal,latestProposal } from './artifacts.js';
 const repoRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -77,7 +81,7 @@ async function assertImplementationBoundary(store,dataDir,task){
  const relative=path.relative(root,runtime);
  if(relative===''||relative!=='..'&&!relative.startsWith(`..${path.sep}`)&&!path.isAbsolute(relative))throw err('Mari runtime data is inside this target project. Move MARI_DATA_DIR outside the project and restart Mari before implementation, then retry.',409,'RUNTIME_IN_PROJECT');
 }
-export function createApp({store,dataDir,accessKey,telegramOptions={},folderPicker=createFolderPicker()}={}) {
+export function createApp({store,dataDir,accessKey,telegramOptions={},folderPicker=createFolderPicker(),marketOptions={},xOptions={},analysisOptions={}}={}) {
  dataDir=path.resolve(dataDir||store?.dataDir||process.env.MARI_DATA_DIR||path.join(repoRoot,'.mari'));
  store ||= createStore(dataDir);
  migrateAgentNames(store);
@@ -118,6 +122,9 @@ export function createApp({store,dataDir,accessKey,telegramOptions={},folderPick
  app.use('/api/projects/:projectId/github',createGithubRouter({store,enqueue:(type,fields)=>enqueue(store,type,fields),getWorkers:()=>workerViews(store)}));
  app.use('/api/voice',createVoiceRouter({store,enqueue:(type,fields)=>enqueue(store,type,fields),getWorkers:()=>workerViews(store)}));
  app.use('/api/personal/newspaper',createNewspaperRouter({store,dataDir,enqueue:(type,fields)=>enqueue(store,type,fields),getWorkers:()=>workerViews(store)}));
+ app.use('/api/personal/markets',createMarketsRouter({store,marketData:createMarketData({store,...marketOptions})}));
+ app.use('/api/personal/x',createXNewsRouter({store,dataDir,...xOptions}));
+ app.use('/api/personal/analysis',createPersonalAnalysisRouter({store,enqueue:(type,fields)=>enqueue(store,type,fields),getWorkers:()=>workerViews(store),...analysisOptions}));
  app.use('/api/projects/:projectId/brag',createBragRouter({store,dataDir,enqueue:(type,fields)=>enqueue(store,type,fields),getWorkers:()=>workerViews(store)}));
  const mutationLocks=new Set();
  for(const collection of ['tasks','services'])app.use(`/api/${collection}/:id`,(req,res,next)=>{

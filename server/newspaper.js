@@ -1,9 +1,11 @@
 import express from 'express';
 import { now } from './store.js';
+import { newspaperPreferences, validateNewspaperPreferences, NEWSPAPER_PREFERENCES } from './newspaper-briefing.js';
+import { xSettings } from './x-news.js';
 
 export const NEWSPAPER_JOB_TYPE = 'personal.newspaper.generate';
 export const NEWSPAPER_EDITION_PREFIX = 'newspaper:edition:';
-export const NEWSPAPER_SETTINGS = Object.freeze({ pages: 2, timeZone: 'Asia/Manila', coins: ['bitcoin', 'ethereum', 'solana'] });
+export const NEWSPAPER_SETTINGS = Object.freeze({ preferredPages: 1, maxPages: 2, timeZone: 'Asia/Manila', coins: ['bitcoin', 'ethereum', 'solana'] });
 export const NEWSPAPER_SECTIONS = Object.freeze(['philippines', 'world', 'valorant', 'dota', 'crypto']);
 const active = (job) => ['queued', 'running'].includes(job.status);
 const fail = (message, status = 400, code = 'INVALID_NEWSPAPER_REQUEST') => Object.assign(new Error(message), { status, code });
@@ -50,9 +52,15 @@ export function createNewspaperRouter({ store, dataDir: _dataDir, enqueue, getWo
     const schedule = store.get('settings', 'newspaper:schedule');
     const registered = schedule?.status === 'active' && typeof schedule.automationId === 'string' && !!schedule.automationId;
     res.json({ edition, editions: editions.slice(0, 30).map(({ id, date, generatedAt, status }) => ({ id, date, generatedAt, status })),
-      job: publicNewspaperJob(jobs().findLast(active) || jobs().at(-1)), settings: NEWSPAPER_SETTINGS,
+      job: publicNewspaperJob(jobs().findLast(active) || jobs().at(-1)), settings: NEWSPAPER_SETTINGS, preferences:newspaperPreferences(store), xAccounts:xSettings(store).accounts.map(({handle,enabled})=>({handle,enabled})),
       schedule: { time: '07:00', timeZone: NEWSPAPER_SETTINGS.timeZone, status: registered ? 'active' : 'pending',
         ...(registered ? { automationId: schedule.automationId } : {}), note: registered ? 'Prepared by the registered Codex automation while the desktop and computer are available.' : 'The daily automation has not been registered yet.' } });
+  });
+  router.put('/preferences',(req,res)=>{
+    let patch;try{patch=validateNewspaperPreferences(req.body);}catch(error){throw fail(error.message);}
+    const previous=newspaperPreferences(store);
+    const preferences=store.put('settings',{...previous,...patch,id:NEWSPAPER_PREFERENCES});
+    res.json({preferences});
   });
   router.post('/generate', (req, res) => {
     if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body) || Object.keys(req.body).some((key) => key !== 'force')) throw fail('Use only the optional Regenerate flag.');

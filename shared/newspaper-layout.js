@@ -1,7 +1,7 @@
 export const NEWSPAPER_TIME_ZONE = 'Asia/Manila';
 export const NEWSPAPER_SECTIONS = Object.freeze({ philippines: 'Philippines', world: 'World', valorant: 'Valorant', dota: 'Dota 2', crypto: 'Crypto' });
 export const NEWSPAPER_PAGE_SECTIONS = Object.freeze([['philippines', 'world'], ['valorant', 'dota', 'crypto']]);
-export const NEWSPAPER_PRESENTATION = 'classic-broadsheet-v1';
+export const NEWSPAPER_PRESENTATION = 'compact-broadsheet-v2';
 
 export function newspaperDate(value, { time = false, weekday = false } = {}) {
   if (typeof value !== 'string' || !value) return 'Time unavailable';
@@ -46,8 +46,10 @@ export function marketChange(value) {
 
 export function newspaperAvailability(edition) {
   const failed = (edition?.sources || []).filter((source) => !['ready', 'empty'].includes(source.status));
-  return failed.length ? `${failed.length} source${failed.length === 1 ? ' was' : 's were'} unavailable. Available reporting is retained; source details are saved with this edition in Mari.`
+  const coverage = failed.length ? `${failed.length} source${failed.length === 1 ? ' was' : 's were'} unavailable. Available reporting is retained; source details are saved with this edition in Mari.`
     : 'A personal digest of available reporting. Open the linked sources for the full context.';
+  const missing = Object.keys(NEWSPAPER_SECTIONS).filter((key) => !(edition?.stories || []).some((story) => story.section === key));
+  return coverage + (missing.length ? ` No current stories: ${missing.map((key) => NEWSPAPER_SECTIONS[key]).join(', ')}.` : '');
 }
 
 export function validateNewspaperPresentation(edition) {

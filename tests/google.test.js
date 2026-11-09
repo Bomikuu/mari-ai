@@ -150,3 +150,9 @@ test('a changed tool contract cannot make the reader invoke an unapproved tool',
   await assert.rejects(f.run());
   assert.equal(f.calls.some((call) => call.method === 'mcpServer/tool/call'), false);
 });
+
+test('newspaper Google reads use a separate private cache and explicit provider/rule scope',async t=>{
+  const f=await fixture(t);f.store.put('settings',{id:'google-brief',keep:'Existing Today cache'});
+  await f.run({briefKey:'newspaper:google-brief',mailQuery:'in:inbox from:synthetic@example.test -filename:ics',includeCalendar:false});
+  const reads=f.calls.filter(c=>c.method==='mcpServer/tool/call');assert.deepEqual(reads.map(c=>c.params.tool),['gmail.search_emails','gmail.list_labels']);assert.match(reads[0].params.arguments.query,/-filename:ics/);assert.equal(f.store.get('settings','google-brief').keep,'Existing Today cache');assert.equal(f.store.get('settings','newspaper:google-brief').brief.mail.truncated,false);assert.equal(f.calls.some(c=>c.method==='turn/start'),false);assert.doesNotMatch(JSON.stringify(f.store.events({})),/Synthetic private|Synthetic sender|synthetic@example/);
+});

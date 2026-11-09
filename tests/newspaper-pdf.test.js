@@ -5,6 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import sharp from 'sharp';
 import { renderNewspaperPdf } from '../server/newspaper-pdf.js';
 import { newspaperPages, marketPrice, marketChange, newspaperDate, safeNewspaperUrl } from '../shared/newspaper-layout.js';
 const exec = promisify(execFile);
@@ -34,13 +35,13 @@ test('shared paper groups keep five topics on two pages and preserve unknown mar
   assert.ok(newspaperDate('2026-11-06T23:00:00Z', { time: true }).includes('7:00'));
 });
 
-test('PDF preserves all bounded stories at readable sizes on exactly two A4 pages', async (t) => {
+test('PDF prefers one A4 page and retains full summaries with a readable fallback', async (t) => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'mari-paper-pdf-'));t.after(() => fs.rm(directory, { recursive: true, force: true }));
   for (const [name, edition] of [['normal', fixture()], ['long', fixture({long:true})], ['empty', fixture({empty:true})]]) {
     const filename = path.join(directory, `${name}.pdf`), result = await renderNewspaperPdf({edition,filename});
     const meta = (await exec('pdfinfo',[filename])).stdout;
-    assert.match(meta,/Pages:\s+2/);assert.match(meta,/Page size:\s+595\.28 x 841\.89 pts/);
-    assert.equal(result.pages,2); assert.ok(result.layout.every((line) => line.y + line.height <= 823.1));
+    assert.match(meta,new RegExp(`Pages:\\s+${result.pages}`));assert.match(meta,/Page size:\s+595\.28 x 841\.89 pts/);
+    assert.ok([1,2].includes(result.pages)); if (name === 'normal' || name === 'empty') assert.equal(result.pages, 1); assert.ok(result.layout.every((line) => line.y + line.height <= 834));
     const text = (await exec('pdftotext',['-raw',filename,'-'])).stdout;
     for (const story of edition.stories) assert.ok(text.replace(/\s+/g,' ').includes(story.summary), `Missing complete body in ${name}`);
     if (name==='empty') {
@@ -48,7 +49,8 @@ test('PDF preserves all bounded stories at readable sizes on exactly two A4 page
       const header=result.layout.find((line)=>line.text==='MARKET WATCH'), notice=result.layout.find((line)=>line.text.startsWith('Market prices are unavailable'));
       assert.ok(notice.y>=header.y+header.height+10,'Unavailable notice must sit below the market heading, not overlap its rule or type.');
     }
-    else assert.ok(result.layout.filter((line)=>edition.stories.some((story)=>story.summary===line.text)).every((line)=>line.size>=9.5));
+    else { const bodies=result.layout.filter((line)=>line.role==='summary'); assert.equal(bodies.length, edition.stories.length); assert.equal(new Set(bodies.map(b=>b.storyId)).size, edition.stories.length); assert.ok(bodies.every(line=>line.size >= (result.pages===1?8.2:9.5))); }
+    assert.ok(result.printPlan.blocks.every(b=>b.x+b.width <= result.width && b.y+b.height <= result.height));
   }
 });
 
@@ -58,4 +60,22 @@ test('PDF refuses invalid content, unreadable overflow and existing output inste
   await assert.rejects(renderNewspaperPdf({edition:invalid,filename:output}),/printable content bounds/);
   await assert.rejects(fs.access(output));
   await fs.writeFile(output,'existing');await assert.rejects(renderNewspaperPdf({edition:fixture({empty:true}),filename:output}),/EEXIST/);assert.equal(await fs.readFile(output,'utf8'),'existing');
+});
+
+test('dense valid reporting falls back to two measured A4 sheets without smaller bodies or lost stories', async (t) => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'mari-paper-dense-')); t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const edition = fixture({long:true});
+  for (const story of edition.stories) {
+    story.title = 'Synthetic presentation assessment retains complete headlines and detailed publication context';
+    story.sourceName = 'Synthetic newsroom with a deliberately extended publication credit for layout verification';
+  }
+  const image = path.join(directory, 'synthetic.jpg');
+  await sharp({ create: { width: 400, height: 250, channels: 3, background: '#b8aa98' } }).jpeg().toFile(image);
+  edition.stories.find(s=>s.section==='dota').image = { artifactId: 'dense-art', width:400, height:250, credit:'Synthetic test illustration' };
+  const filename = path.join(directory, 'dense.pdf'), result = await renderNewspaperPdf({edition,filename,imageFiles:{'dense-art':image}});
+  assert.equal(result.pages,2); assert.equal(result.printPlan.bodySize,9.5);
+  const bodies=result.layout.filter(b=>b.role==='summary'); assert.equal(bodies.length,8); assert.equal(new Set(bodies.map(b=>b.storyId)).size,8);
+  const text=(await exec('pdftotext',['-raw',filename,'-'])).stdout.replace(/\s+/g,' ');
+  for (const story of edition.stories) assert.ok(text.includes(story.summary));
+  const meta=(await exec('pdfinfo',[filename])).stdout; assert.match(meta,/Pages:\s+2/);
 });

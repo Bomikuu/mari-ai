@@ -66,7 +66,7 @@ test('newspaper routes archive safely and cancellation cannot alter another work
   assert.equal((await post('/newspaper/cancel', { jobId: 'service-job' })).status, 404); assert.equal(f.store.get('jobs', 'service-job').status, 'queued');
   assert.equal((await post('/newspaper/cancel', { jobId: f.job.id })).status, 200); assert.equal(f.store.get('jobs', f.job.id).cancelRequested, true);
   assert.equal((await post('/newspaper/generate', { date: '2020-01-01' })).status, 400);
-  const state = await (await fetch(base + '/newspaper')).json(); assert.equal(state.schedule.status, 'pending'); assert.equal(state.settings.pages, 2);
+  const state = await (await fetch(base + '/newspaper')).json(); assert.equal(state.schedule.status, 'pending'); assert.equal(state.settings.preferredPages, 1); assert.equal(state.settings.maxPages, 2);
   f.store.put('settings', { id: 'newspaper:schedule', status: 'active', automationId: 'real-registered-id' });
   assert.equal((await (await fetch(base + '/newspaper')).json()).schedule.status, 'active');
   assert.equal((await fetch(base + '/newspaper?editionId=unknown')).status, 404);
